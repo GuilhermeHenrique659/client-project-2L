@@ -7,6 +7,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        'cnt-dark': '#282B30',
+        'input-bg': '#424549',
+        'button-color': '#D9D9D9',
+      },
+      fontFamily: {
+        sans: [
+          'Roboto'
+        ],
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
