@@ -22,7 +22,6 @@ export default function Button(props: PropsWithChildren<ButtonProps>){
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}>
             <button onClick={props.onClick}
-
                 className={`bg-button-color text-slate-800 h-7 shadow-lg rounded-md items-center cursor-pointer ${(props.isError && animate) ? 'border border-red-600 animate-shake ': ''}` + props.className} 
                 disabled={props.isError}>
                     {props.children}

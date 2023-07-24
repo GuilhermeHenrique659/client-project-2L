@@ -17,7 +17,20 @@ export class ServerRepository implements IServerRepository {
                 ...headers,
             }
         };
+    }
 
+    private checkPayloadSize(data: string): IServerResponseError | undefined{
+        const payloadSizeInBytes = new Blob([data]).size;
+
+        const payloadSizeInMB = payloadSizeInBytes / (1024 * 1024);
+        
+        if(payloadSizeInMB > 18){
+            return {
+                error: {
+                    message: 'Dados muito grande, precisa ser menos 18 mb'
+                }
+            }
+        }
     }
 
     public setToken(token: string): void {
@@ -45,51 +58,58 @@ export class ServerRepository implements IServerRepository {
 
     public async post<R, T>(path: string, payload: T, auth: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError> {
         const url = `${this._serverUrl}/${path}`;
+        const data = JSON.stringify(payload);
+
+        const error = this.checkPayloadSize(data);
+        if(error) return error;
 
         if (auth){
             this.setServerHeaders({
                 authorization: `Bearer ${this._jwt}`
             });
 
-            const data = await (await fetch(url, { 
+            const response = await (await fetch(url, { 
                 ...this.serverConfiguration,
                 method: 'POST',
-                body: JSON.stringify(payload)
+                body: data
             })).json();
             
-            return data;
+            return response;
         }
         
         return await (await fetch(url, { 
             ...this.serverConfiguration,
             method: 'POST',
-            body: JSON.stringify(payload)
+            body: data
         })).json();
     }
 
     
     public async patch<R, T>(path: string, payload: T, auth: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError> {
         const url = `${this._serverUrl}/${path}`;
-        console.log(this._jwt);
+        const data = JSON.stringify(payload);
+
+        const error = this.checkPayloadSize(data);
+        if(error) return error;
         
         if (auth){
             this.setServerHeaders({
                 authorization: `Bearer ${this._jwt}`
             });
 
-            const data = await (await fetch(url, { 
+            const response = await (await fetch(url, { 
                 ...this.serverConfiguration,
                 method: 'PATCH',
-                body: JSON.stringify(payload)
+                body: data
             })).json();
             
-            return data;
+            return response;
         }
         
         return await (await fetch(url, { 
             ...this.serverConfiguration,
             method: 'PATCH',
-            body: JSON.stringify(payload)
+            body: data
         })).json();
     }
 }

@@ -12,36 +12,14 @@ import userRepository from "@src/repository/user/UserRepository";
 import AppError from "@src/common/errors/AppError";
 import Loading from "@src/components/atoms/loading/Loading";
 import InputShowError from "@src/components/atoms/input/InputError";
+import useTagSearch from "@src/hooks/tags/TagSearchHook";
 
 
 export default function RegisterTags() {
     const router = useRouter();
-
-    const [tags, setTags] = useState<Tag[]>([]);
-    const [searchInput, setSearchInput] = useState('');
-    const [tagResults, setSearchResults] = useState<Tag[]>([]);
+    const { tags, searchInput, tagResults, handleAddTag, handleSearchInput } = useTagSearch();
     const [error, setError] = useState<AppError>();
     const [loading, setLoading] = useState<boolean>(false);
-
-
-    const handleAddTag = (description: string) => {
-        if(description.length > 2)
-            setTags([...tags, {
-                description: description
-            }]);
-    };
-
-    const handleSearchInput = async (searchTerm: string) => {
-        if (searchTerm.length < 2){
-            setSearchInput('');
-            return;
-        }
-        setSearchInput(searchTerm);
-        const tags = await tagRepository.searchTag(searchTerm);
-        if(tags){
-            setSearchResults(tags);
-        }
-    }
 
     const handleSaveUserTags =async () => {
         if (tags.length > 0){
