@@ -1,7 +1,11 @@
+'use client'
+import Navbar from "@src/components/molecules/navbar/Navbar";
 
 
 export default function Index() {
     return (
-        <h1>Home</h1>
+        <>
+            <Navbar></Navbar>
+        </>
     )
 }

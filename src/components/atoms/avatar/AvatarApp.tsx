@@ -15,7 +15,12 @@ export default function AvatarApp(props: IAvatarProps) {
     if(avatar){
         return <Avatar round size={size} src={'http://localhost:3001/file/'+avatar}></Avatar>
     } else {
-        const { user } = LocalStorageHelpers.get<CreateUserResponse>('user');
+        
+        const data = LocalStorageHelpers.get<CreateUserResponse>('user');
+        
+        if(!data) return <Avatar round size={size}></Avatar>;
+
+        const { user } = data;
 
         if (user.avatar){
             return <Avatar round size={size} src={'http://localhost:3001/file/'+user.avatar}></Avatar>

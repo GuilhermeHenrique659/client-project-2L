@@ -42,7 +42,7 @@ export default function RegisterAvatar() {
                 <AvatarApp avatar={filename} size="150" />
                 {loading ? 
                     <Loading></Loading> : 
-                    <input id="dropzone-file" type="file" name="file" onChange={handleUploadAvatar} />
+                    <input id="dropzone-file" className="p-2 m-1 rounded-t-md" type="file" name="file" onChange={handleUploadAvatar} />
                 }
                 {error && <InputShowError>{error.message}</InputShowError>}
                 <div>

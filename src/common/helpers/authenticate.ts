@@ -1,15 +1,24 @@
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse";
 import LocalStorageHelpers from "./localStorageHelper";
-import IServerRepository from "@src/repository/common/IServerRepository";
+import IRepository from "@src/repository/common/IRepository";
 
-export default function autheticate(server: IServerRepository) {
-        try {
-            const user = LocalStorageHelpers.get<CreateUserResponse>('user');
-            if (user){
-                server.setToken(user.token);
+export default function isAuthetificated() {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        const originalMethod = descriptor.value;
+
+        descriptor.value = function (...args: any[]) {
+            const { server } = this as IRepository;
+            try {
+                const user = LocalStorageHelpers.get<CreateUserResponse>('user');
+                if (user)
+                    server.setToken(user.token);
+            } catch {
+                server.setToken('');
             }
 
-        } catch (err) {
-            console.log('token not found');
-        }
+            return originalMethod.apply(this, args);
+        };
+
+        return descriptor
+    };
 }

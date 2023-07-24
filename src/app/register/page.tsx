@@ -8,8 +8,8 @@ import Form from "@src/components/molecules/form/Form";
 import User from "@src/entity/User";
 import setRegisterForm from "@src/hooks/form/register/RegisterForm";
 import userRepository from "@src/repository/user/UserRepository";
-import { cookies } from "next/dist/client/components/headers";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation'
 import { useState } from "react";
 
 export default function Register() {
@@ -19,13 +19,13 @@ export default function Register() {
     const [error, setError] = useState<AppError>();
 
     const handleOnClickSave = async () => {
-        setLoading(true)
+        setLoading(true);
         const user = await userRepository.register({ name, email, password } as User, setError);
         setLoading(false);
 
         if (user) {
             LocalStorageHelpers.set('user', user);
-            cookies().set('token', user.token)
+            setCookie('token', user.token)
             router.push('/register/avatar');
         }
     }

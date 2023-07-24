@@ -2,29 +2,60 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@src/components/atoms/button/Button";
-import Form from "@src/components/molecules/form/Form";
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import Input from "@src/components/atoms/input/Input";
-import User from "@src/entity/User";
+import tagRepository from "@src/repository/tag/TagRepository";
+import Tag from "@src/entity/Tag";
+import userRepository from "@src/repository/user/UserRepository";
+import AppError from "@src/common/errors/AppError";
+import Loading from "@src/components/atoms/loading/Loading";
+import InputShowError from "@src/components/atoms/input/InputError";
 
 
-export default function RegisterTags({ searchParams }: { searchParams: { userId: string}}) {
-    const [tags, setTags] = useState<string[]>([]);
+export default function RegisterTags() {
     const router = useRouter();
+
+    const [tags, setTags] = useState<Tag[]>([]);
     const [searchInput, setSearchInput] = useState('');
-    const [searchResults, setSearchResults] = useState<string[]>([]);
-    const handleAddTag = (tag: string) => {
-        setTags([...tags, tag])
+    const [tagResults, setSearchResults] = useState<Tag[]>([]);
+    const [error, setError] = useState<AppError>();
+    const [loading, setLoading] = useState<boolean>(false);
+
+
+    const handleAddTag = (description: string) => {
+        if(description.length > 2)
+            setTags([...tags, {
+                description: description
+            }]);
     };
 
-
-    useEffect(() => {
-        if (searchInput) {
-            setSearchResults(['teste', 'teste2', 'teste3'])
+    const handleSearchInput = async (searchTerm: string) => {
+        if (searchTerm.length < 2){
+            setSearchInput('');
+            return;
         }
-    }, [searchInput])
+        setSearchInput(searchTerm);
+        const tags = await tagRepository.searchTag(searchTerm);
+        if(tags){
+            setSearchResults(tags);
+        }
+    }
+
+    const handleSaveUserTags =async () => {
+        if (tags.length > 0){
+            setLoading(true);
+            console.log(tags);
+            
+            await userRepository.createUserTag(tags, setError);
+            setLoading(false);
+        }
+
+        router.push('/')
+    }
+
+
 
     return (
         <div className="flex h-screen justify-around items-center">
@@ -33,16 +64,16 @@ export default function RegisterTags({ searchParams }: { searchParams: { userId:
                 <h3>O que voce tem interesse ? </h3>
                 <div className="flex flex-row items-center align-middle z-10 mb-4">
                     <div className="flex flex-col z-10">
-                        <div className=" flex">
-                            <Input className="p-2" id="search" name="" stateSetter={setSearchInput}></Input>
+                        <div className="flex items-center align-middle">
+                            <Input  id="search" name="" stateSetter={handleSearchInput}></Input>
                             <Button className="flex items-center" onClick={() => handleAddTag(searchInput)}><FontAwesomeIcon className="p-2" icon={faAdd}></FontAwesomeIcon></Button>
                         </div>
-                        <div className=" bg-input-bg h-20 overflow-y-scroll scroll-p-px w-64 rounded-md z-10">
+                        <div className=" bg-input-bg h-20 overflow-y-auto scroll-p-px w-64 rounded-md z-10">
                             <div className="flex flex-col divide-y divide-gray-400">
-                                {searchResults.map(result => {
+                                {tagResults.map(result => {
                                     return (
-                                        <div className=" text-md p-2 hover:bg-slate-400 cursor-pointer" onClick={() => handleAddTag(result)}>
-                                            {result}
+                                        <div key={result.id} className=" text-md p-2 hover:bg-slate-400 cursor-pointer" onClick={() => handleAddTag(result.description)}>
+                                            {result.description}
                                         </div>)
                                 })}
                             </div>
@@ -51,15 +82,17 @@ export default function RegisterTags({ searchParams }: { searchParams: { userId:
                 </div>
                 <div className="flex flex-col items-end">
 
-                    <div className="w-96 p-4 bg-input-bg rounded-md shadow-lg min-h-[75px] overflow-y-scroll">
-                        {tags.length > 0 ? tags?.map(tag => ` #${tag}`) : <>
-                                <h4>Procure itens de seu interesse, se não encontrar adcione</h4>
+                    <div className="w-96 p-4 bg-input-bg rounded-md shadow-lg min-h-[75px]  overflow-y-auto">
+                        {tags.length > 0 ? tags?.map(tag => ` #${tag.description}`) : <>
+                                <h4>Procure itens de seu interesse, se não encontrar adicione</h4>
                         </>}
                     </div>
                 </div>
                 <div>
                     <Button className="w-32" onClick={() => router.push('/register/avatar')}>Voltar</Button>
-                    <Button className="w-32" onClick={() => console.log('proximo')}>Proximo</Button>
+                    {error && <InputShowError>{error.message}</InputShowError>}
+                    {loading && <Loading></Loading>}
+                    <Button className="w-32" onClick={handleSaveUserTags}>Salvar</Button>
                 </div>
             </div>
         </div>

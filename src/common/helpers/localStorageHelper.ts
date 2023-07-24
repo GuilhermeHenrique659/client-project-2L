@@ -1,13 +1,12 @@
-import AppError from "../errors/AppError";
+'use client'
 
 class LocalStorageHelpers {
-    static get<T>(key: string): T {
+    static get<T>(key: string): T | undefined {
         const data = localStorage.getItem(key);
         if(data) {
             return JSON.parse(data) as T
         }
-
-        throw new AppError({ message: 'item not found'})
+        return;
     }
 
     static set<T>(key: string, data: T) {

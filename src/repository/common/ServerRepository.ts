@@ -70,7 +70,8 @@ export class ServerRepository implements IServerRepository {
     
     public async patch<R, T>(path: string, payload: T, auth: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError> {
         const url = `${this._serverUrl}/${path}`;
-
+        console.log(this._jwt);
+        
         if (auth){
             this.setServerHeaders({
                 authorization: `Bearer ${this._jwt}`

@@ -16,9 +16,7 @@ export default function Login() {
     const { inputs, email, password } = setLoginForm()
     const [ error, setError ] = useState<AppError>()
 
-    const handleOnClickLogin = async () => {
-            console.log({ email, password });
-            
+    const handleOnClickLogin = async () => {           
             const user = await userRepository.login({ email, password } as User, setError);
             
             if (user){

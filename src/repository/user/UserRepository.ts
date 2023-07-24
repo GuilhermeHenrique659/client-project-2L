@@ -6,11 +6,16 @@ import ServerError from "../common/ServerError";
 import IRepository from "../common/IRepository";
 import AppError from "@src/common/errors/AppError";
 import File from "@src/entity/File";
-import autheticate from "@src/common/helpers/authenticate";
 import serverRepository from "../common/ServerRepository";
+import isAuthetificated from "@src/common/helpers/authenticate";
+import Tag from "@src/entity/Tag";
 
 export class UserRepository implements IRepository {
-    constructor (public readonly server: IServerRepository) {}
+    public readonly server: IServerRepository
+
+    constructor (server: IServerRepository) {
+        this.server = server
+    }
 
     public async register(user: User, setError: Dispatch<AppError>): Promise<CreateUserResponse | undefined> {
         const userCreated = await this.server.post<CreateUserResponse, User>('user', user);
@@ -22,6 +27,7 @@ export class UserRepository implements IRepository {
         ServerError(userCreated, setError);
     }
 
+
     public async login(user: User, setError: Dispatch<AppError>): Promise<CreateUserResponse | undefined>{
         const userLogin = await this.server.post<CreateUserResponse, User>('user/login', user);
 
@@ -32,8 +38,8 @@ export class UserRepository implements IRepository {
         ServerError(userLogin, setError);
     }
 
+    @isAuthetificated()
     public async updateAvatar(file: File, setError: Dispatch<AppError>): Promise<string | undefined> {
-        autheticate(this.server);
         const avatar = await this.server.patch<{ filename: string }, File>('user/avatar', file, true);
 
         if ('data' in avatar){
@@ -41,6 +47,16 @@ export class UserRepository implements IRepository {
         }
 
         ServerError(avatar, setError);
+    }
+
+    @isAuthetificated()
+    public async createUserTag(tags: Tag[], setError: Dispatch<AppError>): Promise<Tag[] | undefined> {
+        const tagsResponse = await this.server.patch<Tag[], {tags: Tag[]}>('user/tags', {tags}, true);
+        console.log(tagsResponse);
+        
+        if ('data' in tagsResponse) return tagsResponse.data;
+
+        ServerError(tagsResponse, setError);
     }
 }
 
