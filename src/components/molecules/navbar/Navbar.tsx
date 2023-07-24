@@ -17,7 +17,7 @@ export default function Navbar() {
                 <h3 className="ml-5">AppName</h3>
             </div>
             <div className="max-md:mt-8 max-md:border-t md:pt-2">
-                {data && <UserNavBar user={data.user as User}></UserNavBar>}
+                {data && <UserNavBar data={data}></UserNavBar>}
             </div>
         </div>
     )

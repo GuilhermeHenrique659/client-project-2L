@@ -1,3 +1,4 @@
+import FileResponse from "./FileResponse";
 import Tag from "./Tag";
 type  User = {
   id?: string;
@@ -8,7 +9,7 @@ type  User = {
 
   name: string;
 
-  avatar?: string;
+  avatar?: FileResponse;
 
   tags?: Tag[];
 }

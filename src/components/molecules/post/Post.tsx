@@ -1,12 +1,20 @@
 import PostHeader from "@src/components/atoms/post/header/PostHeader";
 import PostBody from "@src/components/atoms/post/postBody/PostBody";
+import PostFoot from "@src/components/atoms/post/postFoot/PostFoot";
+import Post from "@src/entity/Post";
 
-export default function Post(){
+interface IPostProps {
+    post: Post
+}
+
+
+export default function PostComponent({ post }: IPostProps){
     return (
         <div className="w-6/12 p-4 max-md:w-full border-b">
            <div className="p-2 mb-4">
-                <PostHeader></PostHeader>
-                <PostBody></PostBody>
+                <PostHeader user={post.user}></PostHeader>
+                <PostBody post={post}></PostBody>
+                <PostFoot></PostFoot>
            </div>
         </div>
     )
