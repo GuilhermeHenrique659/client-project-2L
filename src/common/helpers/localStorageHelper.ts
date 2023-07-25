@@ -12,6 +12,10 @@ class LocalStorageHelpers {
     static set<T>(key: string, data: T) {
         localStorage.setItem(key, JSON.stringify(data));
     }
+
+    static delete(key: string){
+        localStorage.removeItem(key);
+    }
 }
 
 export default LocalStorageHelpers;
