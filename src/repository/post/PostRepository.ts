@@ -13,13 +13,12 @@ class PostRepository implements IRepository {
     @isAuthetificated()
     public async getList(page: number){
         const posts = await this.server.get<Post[]>(`post?page=${page}`, true);
-        console.log(posts);
         
         if ('data' in posts) return posts.data;
     }
 
     @isAuthetificated()
-    public async save(post: Post, setError: Dispatch<AppError>) {
+    public async save(post: Post, setError: Dispatch<AppError>) {        
         const createdPost = await this.server.post<Post>('post/', post, true);
         
         if('data' in createdPost) return createdPost.data;

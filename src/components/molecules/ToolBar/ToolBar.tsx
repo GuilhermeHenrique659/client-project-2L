@@ -1,11 +1,16 @@
 import { faCirclePlus, faHouse, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import PostForm from "../post/PostForm";
 import { useRouter } from "next/navigation";
+import Post from "@src/entity/Post";
+
+interface IToolBarProps {
+    setPosts: Dispatch<SetStateAction<Post[]>>
+}
 
 
-export default function TooBar() {
+export default function TooBar(props: IToolBarProps) {
     const router = useRouter();
     const [showPostForm, setShowPostForm] = useState<boolean>(false);
 
@@ -30,7 +35,7 @@ export default function TooBar() {
                 </button>
             </div>
             <div className={`h-fit w-full border mt-4 shadow-lg rounded-md z-10 origin-top-right ${!showPostForm && 'hidden'}`}role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
-                <PostForm showPostForm={handleShowPostForm}></PostForm>
+                <PostForm showPostForm={handleShowPostForm} setPosts={props.setPosts}></PostForm>
             </div>
         </div>
     )

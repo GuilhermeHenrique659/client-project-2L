@@ -3,4 +3,5 @@ export const FileAccepted = [
     'jpg',
     'png',
     'mp4',
+    'jpeg'
 ]

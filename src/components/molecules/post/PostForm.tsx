@@ -1,13 +1,8 @@
-import { ChangeEvent, useState } from "react";
-import Tag from "@src/entity/Tag";
+import { Dispatch, SetStateAction, useState } from "react";
 import Input from "@src/components/atoms/input/Input";
 import Button from "@src/components/atoms/button/Button";
-import tagRepository from "@src/repository/tag/TagRepository";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
-import FileNormalize from "@src/common/helpers/FileNormalize";
-import File from "@src/entity/File";
-import AppError from "@src/common/errors/AppError";
 import postRepository from "@src/repository/post/PostRepository";
 import Post from "@src/entity/Post";
 import Loading from "@src/components/atoms/loading/Loading";
@@ -16,14 +11,14 @@ import useTagSearch from "@src/hooks/tags/TagSearchHook";
 import usePostForm from "@src/hooks/form/post/PostFormHook";
 
 interface IPostFormProps {
-    showPostForm: () => void
+    showPostForm: () => void;
+    setPosts: Dispatch<SetStateAction<Post[]>>
 }
 
-export default function PostForm({ showPostForm }: IPostFormProps) {
+export default function PostForm({ showPostForm, setPosts }: IPostFormProps) {
     const { tags, searchInput, tagResults, handleAddTag, handleSearchInput } = useTagSearch();
-    const { content, filesBase, handleContent, handleUploadFiles } = usePostForm();
+    const { content, filesBase, error, handleContent, handleUploadFiles, setError } = usePostForm();
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<AppError>();
 
     const handleSavePost = async () => {
         setLoading(true);        
@@ -31,7 +26,8 @@ export default function PostForm({ showPostForm }: IPostFormProps) {
         setLoading(false);
 
         if(post){
-            showPostForm()
+            showPostForm();
+            setPosts((currentPost) => [post, ...currentPost]);
         }
     }
 

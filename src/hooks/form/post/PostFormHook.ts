@@ -1,3 +1,5 @@
+import { FileAccepted } from "@src/common/enum/FileAccepted";
+import AppError from "@src/common/errors/AppError";
 import FileNormalize from "@src/common/helpers/FileNormalize";
 import File from "@src/entity/File";
 import { ChangeEvent, useState } from "react";
@@ -5,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 export default function usePostForm(){
     const [content, setContent] = useState<string>();
     const [filesBase, setfilesBase] = useState<File[]>([]);
+    const [error, setError] = useState<AppError>()
 
     const handleContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setContent(e.target.value)
@@ -21,6 +24,8 @@ export default function usePostForm(){
                     const previousFiles = filesBase
                     previousFiles.push(file)
                     setfilesBase(previousFiles)
+                } else {
+                    setError({ message: `Aceito apenas ${FileAccepted}`});
                 }
             }   
         }
@@ -29,7 +34,9 @@ export default function usePostForm(){
     return {
         content,
         filesBase,
+        error,
         handleContent,
-        handleUploadFiles
+        handleUploadFiles,
+        setError
     }
 }

@@ -14,7 +14,7 @@ export default function PostComponent({ post }: IPostProps){
            <div className="p-2 mb-4">
                 <PostHeader user={post.user}></PostHeader>
                 <PostBody post={post}></PostBody>
-                <PostFoot></PostFoot>
+                <PostFoot post={post}></PostFoot>
            </div>
         </div>
     )

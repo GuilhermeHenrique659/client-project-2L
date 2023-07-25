@@ -12,7 +12,7 @@ export default interface Post {
 
     tags: Tag[];
 
-    files: FileResponse[];
+    files: FileResponse[] | File[];
 
     hasLike: boolean;
 

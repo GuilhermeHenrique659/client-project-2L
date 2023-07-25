@@ -1,6 +1,6 @@
 
 export default function Gallery({ images }: { images: string[] }) {
-    if (images.length > 1)
+    if (images.length > 5)
         return (
             <div className="container mx-auto">
                 <div className="grid-cols-3 space-y-2 lg:space-y-0 lg:grid lg:gap-3 lg:grid-rows-3">
