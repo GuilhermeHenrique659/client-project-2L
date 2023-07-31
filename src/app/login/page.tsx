@@ -5,6 +5,7 @@ import LocalStorageHelpers from "@src/common/helpers/localStorageHelper";
 import Button from "@src/components/atoms/button/Button";
 import Form from "@src/components/molecules/form/Form";
 import User from "@src/entity/User";
+import ClientSocket from "@src/events/ClientSocket/common/ClientSocket";
 import setLoginForm from "@src/hooks/form/login/LoginForm";
 import userRepository from "@src/repository/user/UserRepository";
 import { setCookie } from 'cookies-next';
@@ -22,6 +23,7 @@ export default function Login() {
             if (user){
                 LocalStorageHelpers.set('user', user);
                 setCookie('token', user.token)
+                ClientSocket.getInstance().connect();
                 router.push('/');
             }
     }

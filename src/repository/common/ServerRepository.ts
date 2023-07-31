@@ -56,7 +56,7 @@ export class ServerRepository implements IServerRepository {
         return await (await fetch(url)).json()
     }
 
-    public async post<R, T>(path: string, payload: T, auth: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError> {
+    public async post<R, T>(path: string, payload?: T, auth = true): Promise<IServerResponseSuccess<R> | IServerResponseError> {
         const url = `${this._serverUrl}/${path}`;
         const data = JSON.stringify(payload);
 
@@ -85,7 +85,7 @@ export class ServerRepository implements IServerRepository {
     }
 
     
-    public async patch<R, T>(path: string, payload: T, auth: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError> {
+    public async patch<R, T>(path: string, payload?: T, auth = true): Promise<IServerResponseSuccess<R> | IServerResponseError> {
         const url = `${this._serverUrl}/${path}`;
         const data = JSON.stringify(payload);
 

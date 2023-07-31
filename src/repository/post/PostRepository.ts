@@ -25,6 +25,15 @@ class PostRepository implements IRepository {
 
         ServerError(createdPost, setError);
     }
+
+    @isAuthetificated()
+    public async like(postId: string, setError: Dispatch<AppError>) {
+        const response = await this.server.post(`post/${postId}/like`);
+
+        if ('data' in response) return true
+
+        ServerError(response, setError);
+    }
 }
 
 const postRepository = new PostRepository(serverRepository);
