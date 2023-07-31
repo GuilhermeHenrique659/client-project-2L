@@ -14,16 +14,12 @@ interface IPostProps {
 export default function Posts({ posts, setPosts }: IPostProps){
     const [page, setPage] = useState<number>(0);
     const [loading, setLoading] = useState(true);
-    const [emptyPosts, setEmptyPosts] = useState(false)
+    const [emptyPosts, setEmptyPosts] = useState(false);
 
     const handleLoadingMore = async () => {
         setPage((currentPage) => currentPage + 1);
         setLoading(true);
-        console.log(page + 1);
-        
         const morePosts = await postRepository.getList(page + 1);
-        console.log(morePosts);
-        
         if(morePosts && morePosts.length > 0){
             setPosts((currentPost) => [...currentPost, ...morePosts])
         } else {

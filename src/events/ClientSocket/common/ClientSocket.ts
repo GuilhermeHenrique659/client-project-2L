@@ -25,7 +25,7 @@ export default class ClientSocket {
                 reconnectionDelayMax: 5000,
                 reconnectionAttempts: Infinity,
                 extraHeaders: {
-                    token: `Bearer ${user.token}`,
+                    authorization: `Bearer ${user.token}`,
                 },
             });
         }
@@ -47,9 +47,15 @@ export default class ClientSocket {
         }
     }
 
-    public emit<T, R = T>(event: string, data: T, setData: Dispatch<R>){
-        this.socket.emit(event, data, (response: IServerResponseSuccess | IServerResponseError ) => {
-            setData(response as unknown as R);
+    public emit<T, R = T>(event: string, data: T): Promise<R>{
+        return new Promise<R>((resolve, reject) => {
+            this.socket.emit(event, data, (response: IServerResponseSuccess | IServerResponseError ) => {
+                if ('data' in response){
+                    resolve(response.data as R);
+                } else {
+                    reject(response);
+                }
+            })
         })
     }
 }

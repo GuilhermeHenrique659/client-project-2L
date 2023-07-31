@@ -7,18 +7,28 @@ import { useState } from "react";
 import postRepository from "@src/repository/post/PostRepository";
 import AppError from "@src/common/errors/AppError";
 import InputShowError from "../../input/InputError";
+import { postSocketRepository } from "@src/events/post/PostSocketRepository";
+import { LikeDataType } from "@src/events/post/types/LikePostType";
 
 interface IPostFootProps {
     post: Post;
 }
 
 export default function PostFoot({post}: IPostFootProps) {
-    const [likeCount, setLikeCount] = useState<number>(post.likeCount);
+    const [likeCount, setLikeCount] = useState<number>(post.likeCount ?? 0);
     const [error, setError] = useState<AppError>();
     const [hasLike, setHasLike] = useState<boolean>(post.hasLike)
+        
+    const handleLikeEvent = (data: LikeDataType) => {        
+        if (post.id === data.postId) {
+            setLikeCount(previous => previous + 1);
+        }
+    }
+
+    postSocketRepository.socket.addListern('post/like-added', handleLikeEvent);
 
     const handleAddLike = async (postId: string) => {
-        await postRepository.like(postId, setError);
+        await postSocketRepository.like(postId, setError);
         setHasLike(true);
         setLikeCount(previous => previous + 1);
     }
