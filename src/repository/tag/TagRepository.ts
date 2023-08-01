@@ -8,9 +8,9 @@ class TagRepository implements IRepository {
     constructor (public readonly server: IServerRepository){}
 
     public async searchTag(searchTerm: string) {
-        const tags = await this.server.get<Tag[]>(`tag/${searchTerm}`);
+        const { data } = await this.server.get<Tag[]>(`tag/${searchTerm}`);
 
-        if ('data' in tags) return tags.data;
+        return data;
     }
 }
 

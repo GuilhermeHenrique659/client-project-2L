@@ -13,50 +13,48 @@ import Tag from "@src/entity/Tag";
 export class UserRepository implements IRepository {
     public readonly server: IServerRepository
 
-    constructor (server: IServerRepository) {
+    constructor(server: IServerRepository) {
         this.server = server
     }
 
     public async register(user: User, setError: Dispatch<AppError>): Promise<CreateUserResponse | undefined> {
-        const userCreated = await this.server.post<CreateUserResponse, User>('user', user);
-
-        if ('data' in userCreated){
-            return userCreated.data;
+        try {
+            const { data } = await this.server.post<CreateUserResponse, User>('user', user);
+            return data;
+        } catch (error) {
+            ServerError(error, setError);
         }
-
-        ServerError(userCreated, setError);
     }
 
-
-    public async login(user: User, setError: Dispatch<AppError>): Promise<CreateUserResponse | undefined>{
-        const userLogin = await this.server.post<CreateUserResponse, User>('user/login', user);
-
-        if ('data' in userLogin){
-            return userLogin.data;
+    public async login(user: User, setError: Dispatch<AppError>): Promise<CreateUserResponse | undefined> {
+        try {
+            const { data } = await this.server.post<CreateUserResponse, User>('user/login', user);
+            
+            return data;
+        } catch (error) {
+            ServerError(error, setError);
         }
-
-        ServerError(userLogin, setError);
     }
 
     @isAuthetificated()
     public async updateAvatar(file: File, setError: Dispatch<AppError>): Promise<string | undefined> {
-        const avatar = await this.server.patch<{ filename: string }, File>('user/avatar', file, true);
+        try {
+            const avatar = await this.server.patch<{ filename: string }, File>('user/avatar', file, true);
 
-        if ('data' in avatar){
-            return avatar.data.filename
+            return avatar.data.filename;
+        } catch (error) {
+            ServerError(error, setError);
         }
-
-        ServerError(avatar, setError);
     }
 
     @isAuthetificated()
     public async createUserTag(tags: Tag[], setError: Dispatch<AppError>): Promise<Tag[] | undefined> {
-        const tagsResponse = await this.server.patch<Tag[], {tags: Tag[]}>('user/tags', {tags}, true);
-        console.log(tagsResponse);
-        
-        if ('data' in tagsResponse) return tagsResponse.data;
-
-        ServerError(tagsResponse, setError);
+        try {
+            const { data } = await this.server.patch<Tag[], { tags: Tag[] }>('user/tags', { tags }, true);
+            return data;
+        } catch (error) {
+            ServerError(error, setError);
+        }
     }
 }
 

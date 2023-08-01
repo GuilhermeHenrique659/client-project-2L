@@ -3,7 +3,7 @@ import { IServerResponseError, IServerResponseSuccess } from "./IServerResponseD
 export default interface IServerRepository {
     setToken(token: string): void;
 
-    get<R>(path: string, auth?: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError>
-    post<R, T = R>(path: string, payload?: T, auth?: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError>
-    patch<R, T = R>(path: string, payload?: T, auth?: boolean): Promise<IServerResponseSuccess<R> | IServerResponseError>
+    get<R>(path: string, auth?: boolean): Promise<IServerResponseSuccess<R>>
+    post<R, T = R>(path: string, payload?: T, auth?: boolean): Promise<IServerResponseSuccess<R>>
+    patch<R, T = R>(path: string, payload?: T, auth?: boolean): Promise<IServerResponseSuccess<R>>
 }
