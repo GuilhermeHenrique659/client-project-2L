@@ -10,7 +10,7 @@ interface IPostProps {
 
 export default function PostComponent({ post }: IPostProps){
     return (
-        <div className="w-6/12 p-4 max-md:w-full border-b">
+        <div className="w-6/12 p-4 max-lg:w-full border-b">
            <div className="p-2 mb-4">
                 <PostHeader user={post.user}></PostHeader>
                 <PostBody post={post}></PostBody>

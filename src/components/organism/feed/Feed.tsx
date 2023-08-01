@@ -11,7 +11,7 @@ export default function Feed() {
 
 
     return (
-        <div className="w-3/4 h-fit max-md:w-full max-md:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-center justify-center p-6">
+        <div className="w-3/4 h-fit max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-center justify-center p-6">
             <FeedBar></FeedBar>
             <TooBar setPosts={setPosts}></TooBar>
             <Posts posts={posts} setPosts={setPosts}></Posts>

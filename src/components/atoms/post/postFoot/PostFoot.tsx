@@ -34,10 +34,12 @@ export default function PostFoot({post}: IPostFootProps) {
     }
 
     return (
-        <div className="w-full rounded-md flex h-12 overflow-hidden divide-x divide-cnt-dark items-center bg-button-color">
-            <Button onClick={() => { }} className="w-24 shadow-none">Perguntas</Button>
-            <Button onClick={() => { }} className="w-24 shadow-none px-4">Discussão</Button>
-            <div className="flex items-center ml-20">
+        <div className=" w-6/6 rounded-md flex h-12 max-md:flex-col max-md:h-fit overflow-hidden md:divide-x divide-cnt-dark items-center md:justify-between bg-button-color">
+            <div className="flex items-center md:items-start">
+                <Button onClick={() => { }} className="w-24 shadow-none px-4">Discussão</Button>
+                <Button onClick={() => { }} className="w-24 shadow-none">Perguntas</Button>
+            </div>
+            <div className="flex items-center md:items-end">
                 <Button onClick={() => handleAddLike(post.id as string)} disabled={hasLike} className="w-24 shadow-none flex p-4 m-0">
                     <h6 className="p-4">{likeCount}</h6>
                     <FontAwesomeIcon size="xl" icon={hasLike ? faHeartSolid : faHeartRegular}></FontAwesomeIcon>
