@@ -23,17 +23,13 @@ export default function RegisterTags() {
 
     const handleSaveUserTags =async () => {
         if (tags.length > 0){
-            setLoading(true);
-            console.log(tags);
-            
+            setLoading(true);            
             await userRepository.createUserTag(tags, setError);
             setLoading(false);
         }
 
         router.push('/')
     }
-
-
 
     return (
         <div className="flex h-screen justify-around items-center">

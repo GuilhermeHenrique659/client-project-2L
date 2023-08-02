@@ -19,7 +19,7 @@ export default function Button(props: PropsWithChildren<ButtonProps>){
     };
 
     return (
-        <div className="p-2 m-2" 
+        <div className="" 
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}>
             <button onClick={props.onClick}

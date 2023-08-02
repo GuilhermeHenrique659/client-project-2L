@@ -1,3 +1,4 @@
+import Community from "./Community";
 import File from "./File";
 import FileResponse from "./FileResponse";
 import Tag from "./Tag";
@@ -11,6 +12,8 @@ export default interface Post {
     user: User;
 
     tags: Tag[];
+
+    community?: Community;
 
     files: FileResponse[] | File[];
 

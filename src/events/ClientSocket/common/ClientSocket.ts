@@ -1,13 +1,16 @@
 import LocalStorageHelpers from "@src/common/helpers/localStorageHelper";
 import { IServerResponseError, IServerResponseSuccess } from "@src/repository/common/IServerResponseDTO";
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse";
-import { Dispatch } from "react";
 import { Socket, io } from "socket.io-client";
 
 
 export default class ClientSocket {
     static instance: ClientSocket;
     private socket!: Socket;
+
+    constructor() {
+        this.connect();
+    }
 
     public static getInstance(): ClientSocket {
         if (!ClientSocket.instance) {
@@ -47,11 +50,11 @@ export default class ClientSocket {
         }
     }
 
-    public emit<T, R = T>(event: string, data: T): Promise<R>{
-        return new Promise<R>((resolve, reject) => {
+    public emit<T, D = any>(event: string, data: D): Promise<T>{
+        return new Promise<T>((resolve, reject) => {
             this.socket.emit(event, data, (response: IServerResponseSuccess | IServerResponseError ) => {
                 if ('data' in response){
-                    resolve(response.data as R);
+                    resolve(response.data as T);
                 } else {
                     reject(response);
                 }
