@@ -9,13 +9,10 @@ import Loading from "@src/components/atoms/loading/Loading";
 import InputShowError from "@src/components/atoms/input/InputError";
 import useTagSearch from "@src/hooks/tags/TagSearchHook";
 import usePostForm from "@src/hooks/form/post/PostFormHook";
+import { IFormProps } from "@src/common/interface/IFormProps";
 
-interface IPostFormProps {
-    showPostForm: () => void;
-    setPosts: Dispatch<SetStateAction<Post[]>>
-}
 
-export default function PostForm({ showPostForm, setPosts }: IPostFormProps) {
+export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
     const { tags, searchInput, tagResults, handleAddTag, handleSearchInput } = useTagSearch();
     const { content, filesBase, error, handleContent, handleUploadFiles, setError } = usePostForm();
     const [loading, setLoading] = useState<boolean>(false);
@@ -26,8 +23,8 @@ export default function PostForm({ showPostForm, setPosts }: IPostFormProps) {
         setLoading(false);
 
         if(post){
-            showPostForm();
-            setPosts((currentPost) => [post, ...currentPost]);
+            setShowForm();
+            setData((currentPost) => [post, ...currentPost]);
         }
     }
 
@@ -63,8 +60,8 @@ export default function PostForm({ showPostForm, setPosts }: IPostFormProps) {
             </div>
             {error && <InputShowError>{error.message}</InputShowError>}
             {loading ? <Loading></Loading> : <div className="flex">
-                <Button className="w-36" onClick={handleSavePost}>Salvar</Button>
-                <Button className="w-36" onClick={showPostForm}>Cancelar</Button>
+                <Button className="w-36 m-2" onClick={handleSavePost}>Salvar</Button>
+                <Button className="w-36 m-2" onClick={setShowForm}>Cancelar</Button>
             </div>}
         </div>
     )

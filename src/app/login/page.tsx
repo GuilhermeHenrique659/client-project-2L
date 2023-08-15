@@ -34,9 +34,9 @@ export default function Login() {
             <div className="flex p-10 flex-col items-center shadow-lg rounded-lg justify-evenly content-center bg-cnt-dark lg:w-1/3 lg:h-2/4 sm:w-full sm:h-full">
                 <h1 className="text-lg">Login</h1>
                 <Form inputs={inputs} appError={error}></Form>
-                <div className="flex">
-                    <Button className="w-32" onClick={handleOnClickLogin}>Login</Button>
-                    <Button className="w-32" onClick={() => router.push('/register')}>Cadastrar</Button>
+                <div className="flex flex-col">
+                    <Button className="w-32 m-2" onClick={handleOnClickLogin}>Login</Button>
+                    <Button className="w-32 m-2" onClick={() => router.push('/register')}>Cadastrar</Button>
                 </div>
             </div>
         </div>

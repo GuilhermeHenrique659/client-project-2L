@@ -1,6 +1,3 @@
-import FeedBar from "@src/components/molecules/FeedBar/FeedBar";
-import TooBar from "@src/components/molecules/ToolBar/ToolBar";
-import Posts from "../posts/Posts";
 import Post from "@src/entity/Post";
 import { useState } from "react";
 import PostsCommuntiy from "../posts/PostsCommunity";

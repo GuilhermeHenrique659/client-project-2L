@@ -63,10 +63,10 @@ export default function RegisterTags() {
                     </div>
                 </div>
                 <div>
-                    <Button className="w-32" onClick={() => router.push('/register/avatar')}>Voltar</Button>
+                    <Button className="w-32 m-2" onClick={() => router.push('/register/avatar')}>Voltar</Button>
                     {error && <InputShowError>{error.message}</InputShowError>}
                     {loading && <Loading></Loading>}
-                    <Button className="w-32" onClick={handleSaveUserTags}>Salvar</Button>
+                    <Button className="w-32 m-2" onClick={handleSaveUserTags}>Salvar</Button>
                 </div>
             </div>
         </div>
