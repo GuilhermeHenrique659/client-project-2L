@@ -14,7 +14,7 @@ export default function CommunityUsers({ communityId }: ICommunityUsersProps) {
 
     useEffect(() => {
         communitySocketRepository.getUsers(communityId).then((value) => {
-            setUsers(value);
+            setUsers(value);            
             setLoading(false);
         })
     }, [])
@@ -26,6 +26,7 @@ export default function CommunityUsers({ communityId }: ICommunityUsersProps) {
                     <div key={user.id} className="flex items-center">
                         <AvatarApp user={user} size="48"></AvatarApp>
                         <h5 className="px-4">{user.name}</h5>
+                        {user.isOnline && <div className="h-3 w-3 rounded-xl bg-green-500"></div>}
                     </div>
                 )
             })}

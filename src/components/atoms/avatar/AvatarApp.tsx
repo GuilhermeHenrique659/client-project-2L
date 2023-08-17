@@ -3,15 +3,17 @@ import Avatar from "react-avatar";
 
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse";
 import User from "@src/entity/User";
+import File from "@src/entity/File";
 
 interface IAvatarProps {
-    avatar?: string
-    user?: User
+    avatar?: string;
+    user?: User;
+    file?: File;
     size: string;
 }
 
 export default function AvatarApp(props: IAvatarProps) {
-    const { avatar, size, user } = props;
+    const { avatar, size, user, file } = props;
 
     
     if(avatar){
@@ -22,6 +24,10 @@ export default function AvatarApp(props: IAvatarProps) {
         }
 
         return <Avatar round size={size} name={user.name}></Avatar>
+
+    } else if (file) {
+        return <Avatar round size={size} src={`data:image/${file.type};base64, ${file.data}`}></Avatar>
+        
     } else {
         
         const data = LocalStorageHelpers.get<CreateUserResponse>('user');

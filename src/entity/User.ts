@@ -11,6 +11,8 @@ type  User = {
 
   avatar?: FileResponse;
 
+  isOnline?: boolean;
+
   tags?: Tag[];
 }
 

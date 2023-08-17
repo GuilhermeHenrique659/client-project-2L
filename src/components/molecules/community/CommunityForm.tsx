@@ -1,33 +1,66 @@
 import AvatarApp from "@src/components/atoms/avatar/AvatarApp";
 import Cover from "@src/components/atoms/community/Cover";
-import Gallery from "@src/components/atoms/gallery/Gallery";
-import Loading from "@src/components/atoms/loading/Loading";
+import Input from "@src/components/atoms/input/Input";
+import InputFile from "@src/components/atoms/input/InputFile";
 import Community from "@src/entity/Community"
-import communityRepository from "@src/repository/community/CommunityRepository"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import TagSearch from "../tag/TagSearch";
+import Tag from "@src/entity/Tag";
+import setCommunityForm from "@src/hooks/form/community/CommunityForm";
+import Form from "../form/Form";
+import InputShowError from "@src/components/atoms/input/InputError";
+import Loading from "@src/components/atoms/loading/Loading";
+import Button from "@src/components/atoms/button/Button";
+import { IFormProps } from "@src/common/interface/IFormProps";
+import communityRepository from "@src/repository/community/CommunityRepository";
+import { useRouter } from "next/navigation";
 
 
-export default function CommunityForm() {
-    const [community, setCommunity] = useState<Community>();
-    const [loading, setLoading] = useState(true);
+export default function CommunityForm({ setShowForm }: IFormProps<Community[]>) {
+    const router = useRouter();
+    const { inputs, setError ,handleUploadCover, avatar, name, cover, error, description } = setCommunityForm()
+    const [tags, setTags] = useState<Tag[]>([]);
+    const [loading, setLoading] = useState(false);
 
-
+    
+    const handleSaveCommunity = async () => {
+        setLoading(true);        
+        const community = await communityRepository.save({ name, tags, avatar, cover, description } as Community, setError);
+        setLoading(false);
+        console.log(community);
+        
+        if (community)
+            router.push(`community?communityId=${community.id}`)
+    }
 
     return (
         <div className="flex flex-col w-full p-4 border-b">
-            <Cover ></Cover>
+            {cover ? <Cover file={cover}></Cover> :<InputFile handleOnChange={handleUploadCover}></InputFile>}
             <div className="flex justify-between">
                 <div className="flex flex-col justify-start p-4">
-                    <div className="flex items-center">
-                        <AvatarApp avatar='' size="64"></AvatarApp>
-                        <h4 className="px-4"></h4>
+                    <div className="flex max-md:flex-col items-start">
+                        <AvatarApp file={avatar} size="64"></AvatarApp>
+                        <div>
+                            <Form className="items-start" inputs={inputs}></Form>
+                        </div>
                     </div>
-                    <h5 className="p-4"></h5>
                 </div>
             </div>
-            <div className="bg-input-bg h-20 overflow-y-auto scroll-p-px w-96 rounded-md z-10 p-3">
-                Tags:
+            <div className="flex flex-col items-start">
+                <div className="bg-input-bg h-20 overflow-y-auto scroll-p-px rounded-md z-10 p-3">
+                    {tags.length > 0 ? tags?.map(tag => ` #${tag.description}`) : <>
+                        <h4>Procure abaixo tag relacionadas ao conteudo</h4>
+                    </>
+                    }
+                </div>
+                <TagSearch tags={tags} setTags={setTags}></TagSearch>
             </div>
+
+            {error && <InputShowError>{error.message}</InputShowError>}
+            {loading ? <Loading></Loading> : <div className="flex">
+                <Button className="w-36 m-2" onClick={handleSaveCommunity}>Salvar</Button>
+                <Button className="w-36 m-2" onClick={setShowForm}>Cancelar</Button>
+            </div>}
         </div>
     )
 }

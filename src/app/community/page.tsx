@@ -6,8 +6,8 @@ import FeedCommunity from '@src/components/organism/feed/FeedCommunity';
 
 export default function Community() {
     const searchParams = useSearchParams()
- 
     const communityId = searchParams.get('communityId') as string;
+    
     return (
         <>
         <Navbar></Navbar>

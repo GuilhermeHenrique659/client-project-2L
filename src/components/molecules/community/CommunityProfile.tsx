@@ -15,16 +15,16 @@ export default function CommunityProfile({ communityId }: ICommunityProfileProps
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        communityRepository.getCommunityData(communityId).then((value) => {
+        communityRepository.getCommunityData(communityId).then((value) => {            
             setCommunity(value);
             setLoading(false);
         })
     }, []);    
 
     return (
-        <div className="flex flex-col w-full p-14 border-b">
+        <div className="flex flex-col w-full border-b">
             <Cover cover={community?.cover}></Cover>
-            <div className="flex justify-between">
+            <div className="flex justify-between max-md:flex-col">
                 <div className="flex flex-col justify-start p-4">
                     <div className="flex items-center">
                         <AvatarApp avatar={community?.avatar?.filename ?? community?.name} size="64"></AvatarApp>
@@ -41,7 +41,6 @@ export default function CommunityProfile({ communityId }: ICommunityProfileProps
                 </div>
             </div>
             <div className="bg-input-bg h-20 overflow-y-auto scroll-p-px w-96 rounded-md z-10 p-3">
-                Tags:
                 {community?.tags.map((tag) => `#${tag.description}`)}
             </div>
             {loading && <Loading></Loading>}
