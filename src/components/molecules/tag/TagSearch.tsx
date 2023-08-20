@@ -13,7 +13,7 @@ interface ITagSearchProps {
 
 export default function TagSearch({ tags, setTags}: ITagSearchProps) {
     const { searchInput, tagResults, handleAddTag, handleSearchInput } = useTagSearch(tags, setTags);
-
+    
     return (
         <div className="flex flex-col mb-2">
         <div className="flex items-center align-middle">

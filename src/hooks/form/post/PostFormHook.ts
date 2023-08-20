@@ -13,9 +13,8 @@ export default function usePostForm(){
         setContent(e.target.value)
     }
 
-    const handleUploadFiles = async (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const files = e.target.files;
+    const handleUploadFiles = async (fileList: FileList | null) => {
+        const files = fileList
         setfilesBase([]);
         if (files?.length) {
             for(let index = 0; index < files.length; index++){

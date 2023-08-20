@@ -3,7 +3,8 @@ import { ChangeEvent } from "react";
 
 
 interface IInputFileProps {
-    handleOnChange: (files: FileList | null) => Promise<void>
+    handleOnChange: (files: FileList | null) => Promise<void>;
+    multiple?: boolean
 }
 
 export default function InputFile(props: IInputFileProps) {
@@ -23,7 +24,7 @@ export default function InputFile(props: IInputFileProps) {
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click para carregar</span> ou araste e solte</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Aceito apenas {FileAccepted.map((file) => `${file} `)}(MAX. 18mb)</p>
                 </div>
-                <input id="dropzone-file" type="file" className="hidden" onChange={e => handleUploadFile(e)}/>
+                <input id="dropzone-file" type="file" multiple={props.multiple} className="hidden" onChange={e => handleUploadFile(e)}/>
             </label>
         </div>
     )

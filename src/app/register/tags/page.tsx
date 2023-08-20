@@ -17,7 +17,8 @@ import useTagSearch from "@src/hooks/tags/TagSearchHook";
 
 export default function RegisterTags() {
     const router = useRouter();
-    const { tags, searchInput, tagResults, handleAddTag, handleSearchInput } = useTagSearch();
+    const [tags, setTags] = useState<Tag[]>([])
+    const { searchInput, tagResults, handleAddTag, handleSearchInput } = useTagSearch(tags, setTags);
     const [error, setError] = useState<AppError>();
     const [loading, setLoading] = useState<boolean>(false);
 

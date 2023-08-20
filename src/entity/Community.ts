@@ -13,6 +13,8 @@ export default interface Community {
 
     admin: User;
 
+    hasFollowing: boolean;
+    
     cover?: FileResponse;
 
     tags: Tag[];

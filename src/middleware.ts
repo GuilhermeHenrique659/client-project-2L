@@ -29,5 +29,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: ["/", "/register/avatar", "/register/tags"],
+    matcher: ["/", "/register/avatar", "/register/tags", "/user/:path*", "/community/:path"],
 };

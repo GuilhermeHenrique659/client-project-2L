@@ -5,12 +5,23 @@ import AppError from "@src/common/errors/AppError";
 import { IServerResponseError, IServerResponseSuccess } from "@src/repository/common/IServerResponseDTO";
 import ServerError from "@src/repository/common/ServerError";
 import Post from "@src/entity/Post";
+import { AddPostType } from "./types/AddPostType";
 
 class PostSocketRepository implements ISocketRepository {
     public readonly socket: ClientSocket;
 
-    constructor(socket: ClientSocket){
+    constructor(socket: ClientSocket) {
         this.socket = socket;
+    }
+
+    public async save(post: AddPostType, setError: Dispatch<AppError>){
+        try {
+            const data = await this.socket.emit<Post>('post/add', post);
+
+            return data
+        } catch (error){
+            ServerError(error, setError)
+        }
     }
 
     public async like(postId: string, setError: Dispatch<AppError>) {
@@ -18,16 +29,16 @@ class PostSocketRepository implements ISocketRepository {
             await this.socket.emit('post/like', { postId });
 
             return true;
-        } catch (error){
+        } catch (error) {
             ServerError(error, setError);
         }
     }
-    
-        public async communityPosts(page: number,communityId: string){
-            const posts = await this.socket.emit<Post[]>('community/list', { communityId, page });
 
-            return posts;
-        }
+    public async communityPosts(page: number, communityId: string) {
+        const posts = await this.socket.emit<Post[]>('community/list', { communityId, page });
+
+        return posts;
+    }
 }
 
 export const postSocketRepository = new PostSocketRepository(ClientSocket.getInstance());

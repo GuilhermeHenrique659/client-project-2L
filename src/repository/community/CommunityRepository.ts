@@ -13,7 +13,7 @@ class CommunityRepository implements IRepository {
 
     @isAuthetificated()
     public async getCommunityData(communityId: string) {
-        const { data } = await this.server.get<Community>(`community/${communityId}`);
+        const { data } = await this.server.get<Community>(`community/${communityId}`, true);
 
         return data;
     }

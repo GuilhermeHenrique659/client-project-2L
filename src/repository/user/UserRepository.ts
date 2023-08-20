@@ -9,6 +9,7 @@ import File from "@src/entity/File";
 import serverRepository from "../common/ServerRepository";
 import isAuthetificated from "@src/common/helpers/authenticate";
 import Tag from "@src/entity/Tag";
+import Community from "@src/entity/Community";
 
 export class UserRepository implements IRepository {
     public readonly server: IServerRepository
@@ -55,6 +56,22 @@ export class UserRepository implements IRepository {
         } catch (error) {
             ServerError(error, setError);
         }
+    }
+
+    @isAuthetificated()
+    public async followCommunity(communityId: string,  setError: Dispatch<AppError>) {
+        try{
+            await this.server.patch(`user/follow/${communityId}`, undefined, true);
+        } catch(error) {
+            ServerError(error, setError);
+        }
+    }
+
+    @isAuthetificated()
+    public async getFollowingCommunity(){
+        const { data } = await this.server.get<Community[]>('user/community', true);
+        
+        return data
     }
 }
 

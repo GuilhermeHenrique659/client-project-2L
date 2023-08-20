@@ -23,7 +23,7 @@ export default function CommunityUsers({ communityId }: ICommunityUsersProps) {
         <div>
             {users.map((user) => {
                 return (
-                    <div key={user.id} className="flex items-center">
+                    <div key={user.id} className="flex p-2 items-center">
                         <AvatarApp user={user} size="48"></AvatarApp>
                         <h5 className="px-4">{user.name}</h5>
                         {user.isOnline && <div className="h-3 w-3 rounded-xl bg-green-500"></div>}

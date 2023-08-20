@@ -4,7 +4,7 @@ import Loading from "@src/components/atoms/loading/Loading";
 import PostComponent from "@src/components/molecules/post/Post"
 import Post from "@src/entity/Post"
 import { postSocketRepository } from "@src/events/post/PostSocketRepository";
-import postRepository from "@src/repository/post/PostRepository";
+import { IServerResponseSuccess } from "@src/repository/common/IServerResponseDTO";
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
 interface IPostProps {
@@ -29,6 +29,13 @@ export default function PostsCommuntiy({ posts, setPosts, communityId }: IPostPr
         }
         setLoading(false);
     }
+
+    const handleAddPost = async ({ data }: IServerResponseSuccess<Post>) => {
+        const { community, ...post } = data;
+        setPosts((currentPosts) => [post, ...currentPosts])
+    }
+
+    postSocketRepository.socket.addListern('post/added', handleAddPost);
 
     useEffect(() => {
         postSocketRepository.communityPosts(0, communityId).then((value) => {

@@ -42,7 +42,7 @@ export default class ClientSocket {
 
     public addListern<T>(listenerName: string, functionEvent: Function) {
         try {
-            this.socket.on(listenerName, function (params: T) {
+            this.socket.off(listenerName).on(listenerName, function (params: T) {
                 functionEvent(params);
             });
         } catch (err) {

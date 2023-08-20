@@ -37,7 +37,7 @@ export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
                 }
             </div>
             <div className="flex flex-col-reverse items-center justify-center">
-                <input type="file" className="w-80 m-2" name="" id="" multiple onChange={handleUploadFiles} />
+                <input type="file" className="w-80 m-2" name="" id="" multiple onChange={(e) => handleUploadFiles(e.target.files)} />
                 <TagSearch setTags={setTags} tags={tags}></TagSearch>
 
             </div>
