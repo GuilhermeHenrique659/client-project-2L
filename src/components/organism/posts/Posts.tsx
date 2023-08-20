@@ -3,6 +3,8 @@ import Button from "@src/components/atoms/button/Button";
 import Loading from "@src/components/atoms/loading/Loading";
 import PostComponent from "@src/components/molecules/post/Post"
 import Post from "@src/entity/Post"
+import { postSocketRepository } from "@src/events/post/PostSocketRepository";
+import { LikeDataType } from "@src/events/post/types/LikePostType";
 import postRepository from "@src/repository/post/PostRepository";
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
@@ -27,6 +29,19 @@ export default function Posts({ posts, setPosts }: IPostProps){
         }
         setLoading(false);
     }
+
+    const handleLikeEvent = (data: LikeDataType) => {
+        setPosts((currentPosts) => {
+            return currentPosts.map((post) => {
+                if (data.postId === post.id){
+                    post.likeCount += 1;
+                }
+                return post;
+            });
+        });
+    }
+
+    postSocketRepository.socket.addListern('post/like-added', handleLikeEvent);
 
     useEffect(() => {
         postRepository.getList(0).then((value) => {

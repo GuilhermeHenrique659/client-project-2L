@@ -19,14 +19,6 @@ export default function PostFoot({post}: IPostFootProps) {
     const [error, setError] = useState<AppError>();
     const [hasLike, setHasLike] = useState<boolean>(post.hasLike)
         
-    const handleLikeEvent = (data: LikeDataType) => {        
-        if (post.id === data.postId) {
-            setLikeCount(previous => previous + 1);
-        }
-    }
-
-    postSocketRepository.socket.addListern('post/like-added', handleLikeEvent);
-
     const handleAddLike = async (postId: string) => {
         await postSocketRepository.like(postId, setError);
         setHasLike(true);

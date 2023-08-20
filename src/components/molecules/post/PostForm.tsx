@@ -8,6 +8,7 @@ import usePostForm from "@src/hooks/form/post/PostFormHook";
 import { IFormProps } from "@src/common/interface/IFormProps";
 import TagSearch from "../tag/TagSearch";
 import Tag from "@src/entity/Tag";
+import InputFile from "@src/components/atoms/input/InputFile";
 
 
 export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
@@ -37,9 +38,8 @@ export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
                 }
             </div>
             <div className="flex flex-col-reverse items-center justify-center">
-                <input type="file" className="w-80 m-2" name="" id="" multiple onChange={(e) => handleUploadFiles(e.target.files)} />
+                <InputFile multiple={true} handleOnChange={handleUploadFiles}></InputFile>
                 <TagSearch setTags={setTags} tags={tags}></TagSearch>
-
             </div>
             {error && <InputShowError>{error.message}</InputShowError>}
             {loading ? <Loading></Loading> : <div className="flex">

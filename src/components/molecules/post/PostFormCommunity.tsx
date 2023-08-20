@@ -27,14 +27,14 @@ export default function PostFormCommunity({ tags, setTags, communityId }: IPostF
 
     const handleSavePost = async () => {
         setLoading(true);
-        const tagsData = tags.map(({description, id}) => {
+        const tagsData = tags.map(({ description, id }) => {
             return { description, id }
         })
         await postSocketRepository.save({ content, tags: tagsData, files: filesBase, communityId } as AddPostType, setError);
         setLoading(false)
     }
 
-    
+
     return (<>
         <div className="flex items-center max-md:flex-col">
             <Input id="content" name="Conteudo" useLabel={false} className="" stateSetter={setContent}></Input>

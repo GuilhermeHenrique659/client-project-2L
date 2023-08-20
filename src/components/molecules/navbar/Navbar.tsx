@@ -18,7 +18,7 @@ export default function Navbar() {
                 <Button className="bg-cnt-dark shadow-none text-neutral-50 flex items-center" onClick={() => router.push('/')}>
                 <div className="rounded-md w-14 h-14 bg-slate-400" id="logo">
                 </div>
-                    <h3 className="ml-5">AppName</h3>
+                    <h3 className="ml-5 text-slate-50">AppName</h3>
                 </Button>
             </div>
             <div className="max-md:mt-8 max-md:border-t md:pt-2">

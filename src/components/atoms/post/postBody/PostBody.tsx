@@ -10,7 +10,7 @@ export default function PostBody({ post }: IPostBodyProps){
     const files = post.files as FileResponse[];
 
     return (
-        <div className="my-6">
+        <div className="my-6 max-md:text-sm">
             <p className="my-4">
             {post.content}            
             </p>

@@ -31,13 +31,17 @@ export default function Feed({ communityId }: IFeedCommunity) {
     return (
         <div className="w-3/4 max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-center justify-center p-6">
             <CommunityProfile setTags={setTags} communityId={communityId}></CommunityProfile>
-            <div className="bg-fixed w-full h-fit max-md:flex-col">
+            <div className="w-full max-md:flex-col">
                 <SideBar communityId={communityId}></SideBar>
-                <div className="flex flex-col shadow-xl border border-slate-500 rounded-md p-2">
-                    <PostFormCommunity tags={tags} setTags={setTags} communityId={communityId}></PostFormCommunity>
+                <div className="flex flex-col-reverse">
+                    <div className="flex flex-col shadow-xl border border-slate-500 rounded-md p-2">
+                        <PostFormCommunity tags={tags} setTags={setTags} communityId={communityId}></PostFormCommunity>
+                    </div>
+                    <div className="h-[35rem] overflow-y-scroll">
+                        <PostsCommuntiy posts={posts} communityId={communityId} setPosts={setPosts}></PostsCommuntiy>
+                    </div>
                 </div>
             </div>
-            <PostsCommuntiy posts={posts} communityId={communityId} setPosts={setPosts}></PostsCommuntiy>
         </div>
     )
 }

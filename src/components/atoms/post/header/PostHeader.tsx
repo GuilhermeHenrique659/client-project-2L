@@ -16,7 +16,7 @@ export default function PostHeader({ user }: IPostHeader) {
         <div className="h-16 flex flex-row justify-between">
             <div className="flex items-center">
                 <AvatarApp user={user} size="64"></AvatarApp>
-                <h4 className="p-6">{user.name}</h4>
+                <h4 className="p-6 max-md:text-sm">{user.name}</h4>
             </div>
             {(currentUser && currentUser.user.id === user.id) &&
                 <div>
