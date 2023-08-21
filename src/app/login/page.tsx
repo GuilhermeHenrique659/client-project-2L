@@ -15,17 +15,19 @@ import { useState } from "react";
 export default function Login() {
     const router = useRouter();
     const { inputs, email, password } = setLoginForm()
-    const [ error, setError ] = useState<AppError>()
+    const [error, setError] = useState<AppError>()
 
-    const handleOnClickLogin = async () => {           
-            const user = await userRepository.login({ email, password } as User, setError);
-            
-            if (user){
-                LocalStorageHelpers.set('user', user);
-                setCookie('token', user.token)
-                ClientSocket.getInstance().connect();
-                router.push('/');
-            }
+
+
+    const handleOnClickLogin = async () => {
+        const user = await userRepository.login({ email, password } as User, setError);
+
+        if (user) {
+            LocalStorageHelpers.set('user', user);
+            setCookie('token', user.token)
+            ClientSocket.getInstance().connect();
+            router.push('/');
+        }
     }
 
 

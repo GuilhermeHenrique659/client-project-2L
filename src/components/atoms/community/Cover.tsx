@@ -1,6 +1,7 @@
 import serverConfig from "@src/common/config/serverConfig/ServerConfig";
 import File from "@src/entity/File";
 import FileResponse from "@src/entity/FileResponse";
+import Image from "next/image";
 
 interface ICoverProps {
     cover?: FileResponse;
@@ -12,8 +13,8 @@ export default function Cover({ cover, file }: ICoverProps) {
 
     if (url) {
         return (
-            <img className="w-full h-72 rounded-md shadow-xl bg-gray-300 flex items-center justify-center" src={url}>
-            </img>
+            <Image className="w-full h-72 rounded-md shadow-xl bg-gray-300 flex items-center justify-center" src={url} alt="">
+            </Image>
         )
     }
     return (

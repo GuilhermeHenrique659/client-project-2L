@@ -39,11 +39,10 @@ export default function Register() {
                 <p className="text-sm p-2 m-2">Lembrando que este é um experimento, por favor, evite usar seu e-mail real ou senhas de outros sites. Seu e-mail não precisa ser válido, e a senha não precisa ser complexa.</p>
                 <h1 className="text-lg">Cadastro</h1>
                 <Form className="items-center" inputs={inputs} appError={error}></Form>
-                {loading && <Loading></Loading>}
-                <div className="flex flex-col">
+                {loading ? <Loading></Loading> : <div className="flex flex-col">
                     <Button className="w-32 m-2" onClick={() => router.push('/login')}>Voltar</Button>
                     <Button className="w-32 m-2" onClick={handleOnClickSave}>Salvar</Button>
-                </div>
+                </div>}
             </div>
         </div>
     )
