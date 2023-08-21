@@ -30,7 +30,7 @@ export default function Input<T>(props: InputProps<T>) {
 
     return (
         <>
-            <div className={"p-2 flex flex-col whitespace-normal overflow-ellipsis " + `${props.type === 'file' && 'h-fit w-8/12 '}`}>
+            <div className={"p-2 flex flex-col whitespace-normal overflow-ellipsis w-full " + `${props.type === 'file' && 'h-fit w-8/12 '}`}>
                 {useLabel && <label className="mb-3 text-lg " htmlFor={props.id}>{props.name}</label>}
                 <input id={props.id}
                     onChange={e => inputValueChange(e, props.stateSetter)}

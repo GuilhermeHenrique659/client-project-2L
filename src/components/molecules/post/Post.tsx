@@ -11,7 +11,7 @@ interface IPostProps {
 
 export default function PostComponent({ post }: IPostProps) {
     return (
-        <div className="w-6/12 p-4 max-lg:w-full border-b">
+        <div className="w-6/12 p-4 max-md:p-0 max-xl:w-full border-b">
             <div className="p-2 mb-4">
                 <div className="flex flex-col justify-start">
                     {post.community && <PostHeaderCommunity community={post.community}></PostHeaderCommunity>}

@@ -1,3 +1,4 @@
+import serverConfig from "@src/common/config/serverConfig/ServerConfig";
 import File from "@src/entity/File";
 import FileResponse from "@src/entity/FileResponse";
 
@@ -7,7 +8,7 @@ interface ICoverProps {
 }
 
 export default function Cover({ cover, file }: ICoverProps) {
-    const url = cover ? ('http://localhost:3001/file/' + cover.filename) : `data:image/${file?.type};base64, ${file?.data}`
+    const url = cover ? (serverConfig.endpoint.path.file + cover.filename) : `data:image/${file?.type};base64, ${file?.data}`
 
     if (url) {
         return (

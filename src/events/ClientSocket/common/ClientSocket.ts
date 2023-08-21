@@ -1,3 +1,4 @@
+import ServerEnvConfig from "@src/common/config/env/ServerEnvConfig";
 import LocalStorageHelpers from "@src/common/helpers/localStorageHelper";
 import { IServerResponseError, IServerResponseSuccess } from "@src/repository/common/IServerResponseDTO";
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse";
@@ -22,7 +23,7 @@ export default class ClientSocket {
     public connect() {
         const user = LocalStorageHelpers.get<CreateUserResponse>('user');
         if(user){
-            this.socket = io('ws://localhost:3001', {
+            this.socket = io(ServerEnvConfig.getSocketIP(), {
                 reconnection: true,
                 reconnectionDelay: 1000,
                 reconnectionDelayMax: 5000,

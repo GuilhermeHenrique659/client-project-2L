@@ -36,8 +36,8 @@ export default function PostFormCommunity({ tags, setTags, communityId }: IPostF
 
 
     return (<>
-        <div className="flex items-center max-md:flex-col">
-            <Input id="content" name="Conteudo" useLabel={false} className="" stateSetter={setContent}></Input>
+        <div className="flex items-center justify-between max-md:flex-col">
+            <Input id="content" name="Conteudo" useLabel={false} className=" w-full" stateSetter={setContent}></Input>
             <div className="flex">
                 <Button className="w-7 h-7 rounded-full p-0 m-2 " onClick={() => setShowUploadFile(!showUploadFile)}><FontAwesomeIcon icon={faUpload}></FontAwesomeIcon></Button>
                 <Button className="w-7 h-7 rounded-full p-0 m-2 " onClick={() => setShowTags(!showTags)}><FontAwesomeIcon icon={faTags}></FontAwesomeIcon></Button>

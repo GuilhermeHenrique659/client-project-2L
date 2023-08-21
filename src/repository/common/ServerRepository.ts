@@ -3,6 +3,7 @@ import HttpMethods from "./HttpMethods";
 import IServerRepository from "./IServerRepository";
 import { IServerResponseSuccess, IServerResponseError } from "./IServerResponseDTO";
 import ServerConfiguration from "./ServerHeaders";
+import ServerEnvConfig from "@src/common/config/env/ServerEnvConfig";
 
 export class ServerRepository implements IServerRepository {
     private _jwt?: string;
@@ -102,6 +103,6 @@ export class ServerRepository implements IServerRepository {
     }
 }
 
-const serverRepository = new ServerRepository('http://localhost:3001');
+const serverRepository = new ServerRepository(ServerEnvConfig.getServerIp());
 
 export default serverRepository;
