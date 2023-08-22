@@ -1,3 +1,5 @@
+'user client'
+
 import AvatarApp from "../avatar/AvatarApp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faSignOut } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +20,6 @@ export default function UserNavBar({ data }: IUserNavbarProps) {
         deleteCookie('token');
         router.push('/login');
     }
-
 
     return (
         <div className="flex items-center max-md:mt-4">

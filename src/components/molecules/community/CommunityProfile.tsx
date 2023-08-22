@@ -22,11 +22,20 @@ export default function CommunityProfile({ communityId, setTags }: ICommunityPro
     const [error, setError] = useState<AppError>();
     const [loading, setLoading] = useState(true);
 
-    const handleFollowCommunity =async () => {
+    const handleFollowCommunity = async () => {
         setLoading(true);
         await userRepository.followCommunity(communityId, setError);
         if(community){
             community.hasFollowing = true;
+        }
+        setLoading(false);
+    }
+
+    const handleUnfollowCommunity = async () => {
+        setLoading(true);
+        await userRepository.unfollowCommunity(communityId, setError);
+        if(community) {
+            community.hasFollowing = false;
         }
         setLoading(false);
     }
@@ -48,7 +57,7 @@ export default function CommunityProfile({ communityId, setTags }: ICommunityPro
                     <div className="flex items-center">
                         <AvatarApp avatar={community?.avatar?.filename ?? community?.name} size="64"></AvatarApp>
                         <h3 className="px-4">{community?.name}</h3>
-                        <Button className="w-36 h-7 rounded-full p-0 m-2 " disabled={community?.hasFollowing} onClick={handleFollowCommunity}>
+                        <Button className="w-36 h-7 rounded-full p-0 m-2 " onClick={community?.hasFollowing ? handleUnfollowCommunity : handleFollowCommunity}>
                             {community?.hasFollowing ? 'Seguindo' : 'Seguir'} <FontAwesomeIcon icon={community?.hasFollowing ? faHeartSolid : faHeartRegular}></FontAwesomeIcon>
                         </Button>
                     </div>

@@ -73,6 +73,15 @@ export class UserRepository implements IRepository {
         
         return data
     }
+
+    @isAuthetificated()
+    public async unfollowCommunity(communityId: string, setError: Dispatch<AppError>){
+        try {
+            await this.server.patch(`user/unfollow/${communityId}`, undefined, true);
+        } catch(error) {
+            ServerError(error, setError);
+        }
+    }
 }
 
 

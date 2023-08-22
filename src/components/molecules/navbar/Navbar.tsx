@@ -1,11 +1,10 @@
+'use client'
+
 import LocalStorageHelpers from "@src/common/helpers/localStorageHelper"
 import Button from "@src/components/atoms/button/Button";
 import UserNavBar from "@src/components/atoms/userNavbar/UserNavBar";
-import User from "@src/entity/User";
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse"
 import { useRouter } from "next/navigation";
-
-
 
 
 export default function Navbar() {
