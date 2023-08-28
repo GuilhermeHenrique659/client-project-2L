@@ -8,11 +8,11 @@ import React from "react";
 
 
 
-export default function TooBar<T>({ children, setData}: PropsWithChildren<IToolBarProps<T>>) {
-    const [showForm, setShowForm] = useState<boolean>(false);
+export default function TooBar<T>({ children, setData }: PropsWithChildren<IToolBarProps<T>>) {
+    const [showForm, setShowForm] = useState<boolean>(true);
 
     const handleShowForm = () => {
-        if(showForm)
+        if (showForm)
             setShowForm(false);
         else
             setShowForm(true);
@@ -30,7 +30,7 @@ export default function TooBar<T>({ children, setData}: PropsWithChildren<IToolB
             <div className="h-10 w-96 rounded-md shadow-lg bg-button-color flex justify-center items-center">
                 <TooBarButton handleAddButton={handleShowForm}></TooBarButton>
             </div>
-            <div className={`h-fit w-full border mt-4 shadow-lg rounded-md z-10 origin-top-right ${!showForm && 'hidden'}`}role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+            <div className={`h-fit w-full border mt-4 shadow-lg rounded-md z-10 origin-top-right ${!showForm && 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                 {form}
             </div>
         </div>
