@@ -28,7 +28,7 @@ export default function Navbar() {
                         <h3 className="ml-5 text-slate-50">AppName</h3>
                     </Button>
                 </div>
-                <div className="max-md:mt-8 max-md:border-t md:pt-2">
+                <div className="max-md:mt-8 max-md:border-t md:pt-2 max-md:w-full">
                     {data && <UserNavBar data={data}></UserNavBar>}
                 </div>
             </div>

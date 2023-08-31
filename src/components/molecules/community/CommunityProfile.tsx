@@ -25,7 +25,7 @@ export default function CommunityProfile({ communityId, setTags }: ICommunityPro
     const handleFollowCommunity = async () => {
         setLoading(true);
         await userRepository.followCommunity(communityId, setError);
-        if(community){
+        if (community) {
             community.hasFollowing = true;
         }
         setLoading(false);
@@ -34,7 +34,7 @@ export default function CommunityProfile({ communityId, setTags }: ICommunityPro
     const handleUnfollowCommunity = async () => {
         setLoading(true);
         await userRepository.unfollowCommunity(communityId, setError);
-        if(community) {
+        if (community) {
             community.hasFollowing = false;
         }
         setLoading(false);
@@ -42,9 +42,9 @@ export default function CommunityProfile({ communityId, setTags }: ICommunityPro
 
 
     useEffect(() => {
-        communityRepository.getCommunityData(communityId).then((value) => {            
+        communityRepository.getCommunityData(communityId).then((value) => {
             setCommunity(value);
-            setLoading(false);            
+            setLoading(false);
             setTags(value.tags);
         })
     }, []);
@@ -53,10 +53,10 @@ export default function CommunityProfile({ communityId, setTags }: ICommunityPro
         <div className="flex flex-col w-full mb-4 border-b">
             <Cover cover={community?.cover}></Cover>
             <div className="flex justify-between max-md:flex-col">
-                <div className="flex flex-col justify-start p-4">
+                <div className="flex flex-col justify-start p-4 max-md:p-0 max-md:py-4">
                     <div className="flex items-center">
                         <AvatarApp avatar={community?.avatar?.filename ?? community?.name} size="64"></AvatarApp>
-                        <h3 className="px-4">{community?.name}</h3>
+                        <h3 className="px-4 text-ellipsis overflow-hidden max-md:w-36">{community?.name}</h3>
                         <Button className="w-36 h-7 rounded-full p-0 m-2 " onClick={community?.hasFollowing ? handleUnfollowCommunity : handleFollowCommunity}>
                             {community?.hasFollowing ? 'Seguindo' : 'Seguir'} <FontAwesomeIcon icon={community?.hasFollowing ? faHeartSolid : faHeartRegular}></FontAwesomeIcon>
                         </Button>
@@ -64,8 +64,8 @@ export default function CommunityProfile({ communityId, setTags }: ICommunityPro
                     <h5 className="p-4">{community?.description}</h5>
                 </div>
                 <div>
-                <h5 className="p-4">Admin:</h5>
-                <div className="flex items-center p-4">
+                    <h5 className="p-4">Admin:</h5>
+                    <div className="flex items-center p-4">
                         <AvatarApp user={community?.admin} size="48"></AvatarApp>
                         <h4 className="px-4">{community?.admin.name}</h4>
                     </div>

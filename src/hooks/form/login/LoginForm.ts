@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function setLoginForm() {
+export default function useLoginForm() {
 	const [email, setEmail] = useState<string>();
 	const [password, setPassword] = useState<string>();
 	const [isError, setIsError] = useState<boolean>(false)

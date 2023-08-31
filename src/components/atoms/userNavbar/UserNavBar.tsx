@@ -23,7 +23,7 @@ export default function UserNavBar({ data }: IUserNavbarProps) {
 
     return (
         <div>
-            <div className="flex items-center max-md:mt-4">
+            <div className="flex items-center max-md:mt-4 max-md:w-full max-md:justify-between">
                 <div className="max-md:flex max-md:flex-row-reverse md:flex flex-row">
                     <h4 className="p-4">{data.user.name}</h4>
                     <AvatarApp avatar={data.user.avatar} size="64"></AvatarApp>

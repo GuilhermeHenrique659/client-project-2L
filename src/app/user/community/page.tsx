@@ -28,9 +28,9 @@ export default function Page() {
             <div className="flex justify-center mt-10 ">
                 <div className="w-3/4 h-fit max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-center justify-center p-6">
                     <FeedBar></FeedBar>
-                    <TooBar setData={setCommunities}><CommunityForm setShowForm={() => null} setData={() => null}></CommunityForm></TooBar>
+                    <TooBar setData={setCommunities}><CommunityForm setShowForm={() => null} setData={setCommunities}></CommunityForm></TooBar>
                     <h3 className="border-b w-full flex justify-center">Communidades seguindo</h3>
-                    <div className="w-3/5 p-4">
+                    <div className="w-3/5 p-4 max-md:w-full max-md:p-1">
                         {loading ? <Loading></Loading> : <CommunityList communities={communities}></CommunityList>}
                     </div>
                 </div>

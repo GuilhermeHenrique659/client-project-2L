@@ -16,26 +16,27 @@ import communityRepository from "@src/repository/community/CommunityRepository";
 import { useRouter } from "next/navigation";
 
 
-export default function CommunityForm({ setShowForm }: IFormProps<Community[]>) {
+export default function CommunityForm({ setShowForm, setData }: IFormProps<Community[]>) {
     const router = useRouter();
-    const { inputs, setError ,handleUploadCover, avatar, name, cover, error, description } = setCommunityForm()
+    const { inputs, setError, handleUploadCover, avatar, name, cover, error, description } = setCommunityForm()
     const [tags, setTags] = useState<Tag[]>([]);
     const [loading, setLoading] = useState(false);
 
-    
+
     const handleSaveCommunity = async () => {
-        setLoading(true);        
+        setLoading(true);
         const community = await communityRepository.save({ name, tags, avatar, cover, description } as Community, setError);
         setLoading(false);
-        console.log(community);
-        
-        if (community)
-            router.push(`community?communityId=${community.id}`)
+
+        if (community) {
+            setData((currentData) => [community, ...currentData])
+            router.push(`/community?communityId=${community.id}`)
+        }
     }
 
     return (
         <div className="flex flex-col w-full p-4 border-b">
-            {cover ? <Cover file={cover}></Cover> :<InputFile handleOnChange={handleUploadCover}></InputFile>}
+            {cover ? <Cover file={cover}></Cover> : <InputFile handleOnChange={handleUploadCover}></InputFile>}
             <div className="flex justify-between">
                 <div className="flex flex-col justify-start p-4">
                     <div className="flex max-md:flex-col items-start">

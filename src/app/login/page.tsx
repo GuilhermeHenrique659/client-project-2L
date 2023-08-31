@@ -3,10 +3,11 @@
 import AppError from "@src/common/errors/AppError";
 import LocalStorageHelpers from "@src/common/helpers/localStorageHelper";
 import Button from "@src/components/atoms/button/Button";
+import Loading from "@src/components/atoms/loading/Loading";
 import Form from "@src/components/molecules/form/Form";
 import User from "@src/entity/User";
 import ClientSocket from "@src/events/ClientSocket/common/ClientSocket";
-import setLoginForm from "@src/hooks/form/login/LoginForm";
+import useLoginForm from "@src/hooks/form/login/LoginForm";
 import userRepository from "@src/repository/user/UserRepository";
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation'
@@ -14,18 +15,20 @@ import { useState } from "react";
 
 export default function Login() {
     const router = useRouter();
-    const { inputs, email, password } = setLoginForm()
-    const [error, setError] = useState<AppError>()
+    const { inputs, email, password } = useLoginForm();
+    const [error, setError] = useState<AppError>();
+    const [loading, setLoading] = useState(false);
 
 
 
     const handleOnClickLogin = async () => {
+        setLoading(true);
         const user = await userRepository.login({ email, password } as User, setError);
-
         if (user) {
             LocalStorageHelpers.set('user', user);
             setCookie('token', user.token)
             ClientSocket.getInstance().connect();
+            setLoading(false);
             router.push('/');
         }
     }
@@ -36,10 +39,10 @@ export default function Login() {
             <div className="flex p-10 flex-col items-center shadow-lg rounded-lg justify-evenly content-center bg-cnt-dark lg:w-1/3 lg:h-2/4 sm:w-full sm:h-full">
                 <h1 className="text-lg">Login</h1>
                 <Form className="items-center" inputs={inputs} appError={error}></Form>
-                <div className="flex flex-col">
+                {loading ? <Loading></Loading> : <div className="flex flex-col">
                     <Button className="w-32 m-2" onClick={handleOnClickLogin}>Login</Button>
                     <Button className="w-32 m-2" onClick={() => router.push('/register')}>Cadastrar</Button>
-                </div>
+                </div>}
             </div>
         </div>
     )
