@@ -69,7 +69,7 @@ export default function CommentList({ postId }: ICommentProps) {
     useEffect(() => {
         commentSocketRepository.getComments(postId).then((value) => {
             if (value && value[0])
-                setComments((currentComment) => [...currentComment, ...value]);
+                setComments(value);
             setLoading(false)
         })
     }, []);

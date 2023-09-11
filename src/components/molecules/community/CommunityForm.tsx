@@ -6,7 +6,7 @@ import Community from "@src/entity/Community"
 import { useState } from "react"
 import TagSearch from "../tag/TagSearch";
 import Tag from "@src/entity/Tag";
-import setCommunityForm from "@src/hooks/form/community/CommunityForm";
+import useCommunityForm from "@src/hooks/form/community/CommunityForm";
 import Form from "../form/Form";
 import InputShowError from "@src/components/atoms/input/InputError";
 import Loading from "@src/components/atoms/loading/Loading";
@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 
 export default function CommunityForm({ setShowForm, setData }: IFormProps<Community[]>) {
     const router = useRouter();
-    const { inputs, setError, handleUploadCover, avatar, name, cover, error, description } = setCommunityForm()
+    const { inputs, setError, handleUploadCover, avatar, name, cover, error, description } = useCommunityForm()
     const [tags, setTags] = useState<Tag[]>([]);
     const [loading, setLoading] = useState(false);
 

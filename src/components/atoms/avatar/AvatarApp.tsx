@@ -5,6 +5,7 @@ import { CreateUserResponse } from "@src/repository/user/types/CreateUserRespons
 import User from "@src/entity/User";
 import File from "@src/entity/File";
 import serverConfig from "@src/common/config/serverConfig/ServerConfig";
+import { useRouter } from "next/navigation";
 
 interface IAvatarProps {
     avatar?: string;
@@ -14,30 +15,31 @@ interface IAvatarProps {
 }
 
 export default function AvatarApp(props: IAvatarProps) {
+    const router = useRouter();
     const { avatar, size, user, file } = props;
 
-    
-    if(avatar){
+
+    if (avatar) {
         return <Avatar round size={size} src={serverConfig.endpoint.path.file + avatar} name={avatar}></Avatar>
-    } else if (user){
-        if (user.avatar){
-            return <Avatar round size={size} src={serverConfig.endpoint.path.file + user.avatar.filename}></Avatar>
+    } else if (user) {
+        if (user.avatar) {
+            return <Avatar className="cursor-pointer" onClick={() => router.push(`/user?userId=${user.id}`)} round size={size} src={serverConfig.endpoint.path.file + user.avatar.filename}></Avatar>
         }
 
-        return <Avatar round size={size} name={user.name}></Avatar>
+        return <Avatar className="cursor-pointer" onClick={() => router.push(`/user?userId=${user.id}`)} round size={size} name={user.name}></Avatar>
 
     } else if (file) {
         return <Avatar round size={size} src={`data:image/${file.type};base64, ${file.data}`}></Avatar>
-        
+
     } else {
-        
+
         const data = LocalStorageHelpers.get<CreateUserResponse>('user');
-        
-        if(!data) return <Avatar round size={size}></Avatar>;
+
+        if (!data) return <Avatar round size={size}></Avatar>;
 
         const { user } = data;
 
-        if (user.avatar){
+        if (user.avatar) {
             return <Avatar round size={size} src={serverConfig.endpoint.path.file + user.avatar}></Avatar>
         }
 

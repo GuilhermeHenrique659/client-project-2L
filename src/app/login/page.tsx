@@ -24,11 +24,11 @@ export default function Login() {
     const handleOnClickLogin = async () => {
         setLoading(true);
         const user = await userRepository.login({ email, password } as User, setError);
+        setLoading(false);
         if (user) {
             LocalStorageHelpers.set('user', user);
             setCookie('token', user.token)
             ClientSocket.getInstance().connect();
-            setLoading(false);
             router.push('/');
         }
     }

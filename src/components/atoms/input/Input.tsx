@@ -4,7 +4,7 @@ import AppError from "@src/common/errors/AppError";
 import inputFile from "./InputFile";
 import InputFile from "./InputFile";
 
-type InputProps<T> = {
+type InputProps<T = any> = {
     id: string;
     name: string;
     useLabel?: boolean;
@@ -36,6 +36,7 @@ export default function Input<T>(props: InputProps<T>) {
                     onChange={e => inputValueChange(e, props.stateSetter)}
                     className={` bg-input-bg rounded-md mb-2 w-fit h-7 p-3 shadow-lg ${showErrorMessage ? ' border  border-red-600 ' : ''} ${props.type === 'file' && 'h-fit max-w-full w-full '} ` + props.className}
                     placeholder={props.name} type={props.type}
+                    value={props.value}
                     max={props.max}
                     min={props.min} />
             </div>

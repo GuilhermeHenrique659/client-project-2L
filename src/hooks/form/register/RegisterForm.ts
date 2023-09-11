@@ -1,21 +1,21 @@
 import { useState } from "react";
 
 
-export default function setRegisterForm () {
-    const [name, setName] = useState<string>();
-    const [email, setEmail] = useState<string>();
+export default function useRegisterForm() {
+	const [name, setName] = useState<string>();
+	const [email, setEmail] = useState<string>();
 	const [password, setPassword] = useState<string>();
 	const [isError, setIsError] = useState<boolean>(false)
 
 	return {
 		inputs: [
 			{
-                type: "text",
+				type: "text",
 				inputName: "Nome",
 				inputId: "name",
 				onChange: setName,
-            },
-            {
+			},
+			{
 				type: "text",
 				inputName: "E-mail",
 				inputId: "email",
@@ -28,7 +28,7 @@ export default function setRegisterForm () {
 				onChange: setPassword,
 			},
 		],
-        name,
+		name,
 		email,
 		password,
 		isError,

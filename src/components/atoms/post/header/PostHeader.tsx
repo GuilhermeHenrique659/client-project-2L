@@ -4,19 +4,22 @@ import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import User from "@src/entity/User";
 import LocalStorageHelpers from "@src/common/helpers/localStorageHelper";
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse";
+import { useRouter } from "next/navigation";
 
 interface IPostHeader {
     user: User
 }
 
 export default function PostHeader({ user }: IPostHeader) {
+    const router = useRouter();
+
     const currentUser = LocalStorageHelpers.get<CreateUserResponse>('user')
 
     return (
         <div className="h-16 flex flex-row justify-between">
             <div className="flex items-center">
                 <AvatarApp user={user} size="64"></AvatarApp>
-                <h4 className="p-6 max-md:text-sm">{user.name}</h4>
+                <h4 className="p-6 max-md:text-sm cursor-pointer" onClick={() => router.push(`/user?userId=${user.id}`)}>{user.name}</h4>
             </div>
             {(currentUser && currentUser.user.id === user.id) &&
                 <div>

@@ -8,7 +8,7 @@ import Button from "@src/components/atoms/button/Button";
 import Loading from "@src/components/atoms/loading/Loading";
 import Form from "@src/components/molecules/form/Form";
 import User from "@src/entity/User";
-import setRegisterForm from "@src/hooks/form/register/RegisterForm";
+import useRegisterForm from "@src/hooks/form/register/RegisterForm";
 import userRepository from "@src/repository/user/UserRepository";
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation'
@@ -16,7 +16,7 @@ import { useState } from "react";
 
 export default function Register() {
     const router = useRouter();
-    const { inputs, name, email, password } = setRegisterForm();
+    const { inputs, name, email, password } = useRegisterForm();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<AppError>();
 
