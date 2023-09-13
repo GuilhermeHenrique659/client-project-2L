@@ -25,6 +25,15 @@ class PostRepository implements IRepository {
             ServerError(error, setError);
         }
     }
+
+    @isAuthetificated()
+    public async remove(id: string, setError: Dispatch<AppError>) {
+        try {
+            await this.server.delete(`post/${id}`);
+        } catch (error) {
+            ServerError(error, setError);
+        }
+    }
 }
 
 const postRepository = new PostRepository(serverRepository);

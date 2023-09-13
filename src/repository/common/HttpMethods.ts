@@ -1,7 +1,8 @@
 enum HttpMethods {
     GET = 'GET',
     POST = 'POST',
-    PATCH = 'PATCH'
+    PATCH = 'PATCH',
+    DELETE = 'DELETE'
 }
 
 export default HttpMethods;

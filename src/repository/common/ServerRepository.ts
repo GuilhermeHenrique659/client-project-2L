@@ -10,9 +10,9 @@ export class ServerRepository implements IServerRepository {
 
     private serverConfiguration = ServerConfiguration;
 
-    constructor (private readonly _serverUrl: string){ }
+    constructor(private readonly _serverUrl: string) { }
 
-    private setServerHeaders(headers: RequestInit["headers"]){
+    private setServerHeaders(headers: RequestInit["headers"]) {
         this.serverConfiguration = {
             ...this.serverConfiguration,
             headers: {
@@ -22,29 +22,29 @@ export class ServerRepository implements IServerRepository {
         };
     }
 
-    private checkPayloadSize(data: string): void{
+    private checkPayloadSize(data: string): void {
         const payloadSizeInBytes = new Blob([data]).size;
 
         const payloadSizeInMB = payloadSizeInBytes / (1024 * 1024);
-        
-        if(payloadSizeInMB > 18){
+
+        if (payloadSizeInMB > 18) {
             throw new AppError({
-                    message: 'Dados muito grande, precisa ser menos 18 mb'
+                message: 'Dados muito grande, precisa ser menos 18 mb'
             })
         }
     }
 
     private async request<R>(url: string, method: HttpMethods, data?: string): Promise<IServerResponseSuccess<R>> {
         return new Promise(async (resolve, rejects) => {
-            const response = await fetch(url,{ 
+            const response = await fetch(url, {
                 ...this.serverConfiguration,
                 method: method,
-                ...(data && {body: data})
+                ...(data && { body: data })
             });
 
             const responseParsed = await response.json();
 
-            if('data' in responseParsed){                
+            if ('data' in responseParsed) {
                 resolve(responseParsed);
             } else {
                 rejects(responseParsed);
@@ -58,8 +58,8 @@ export class ServerRepository implements IServerRepository {
 
     public async get<R>(path: string, auth = true): Promise<IServerResponseSuccess<R>> {
         const url = `${this._serverUrl}/${path}`;
-        
-        if (auth){
+
+        if (auth) {
             this.setServerHeaders({
                 authorization: `Bearer ${this._jwt}`
             });
@@ -72,34 +72,47 @@ export class ServerRepository implements IServerRepository {
     public async post<R, T>(path: string, payload?: T, auth = true): Promise<IServerResponseSuccess<R>> {
         const url = `${this._serverUrl}/${path}`;
         const data = JSON.stringify(payload);
-        
+
         this.checkPayloadSize(data);
-        if (auth){
+        if (auth) {
             this.setServerHeaders({
                 authorization: `Bearer ${this._jwt}`
             });
 
             return await this.request(url, HttpMethods.POST, data);
         }
-        
+
         return await this.request(url, HttpMethods.POST, data);
     }
 
-    
+
     public async patch<R, T>(path: string, payload?: T, auth = true): Promise<IServerResponseSuccess<R>> {
         const url = `${this._serverUrl}/${path}`;
         const data = JSON.stringify(payload);
 
-        this.checkPayloadSize(data);        
-        if (auth){
+        this.checkPayloadSize(data);
+        if (auth) {
             this.setServerHeaders({
                 authorization: `Bearer ${this._jwt}`
             });
 
             return await this.request(url, HttpMethods.PATCH, data);
         }
-        
+
         return await this.request(url, HttpMethods.PATCH, data);
+    }
+
+    public async delete<R>(path: string, auth = true): Promise<void> {
+        const url = `${this._serverUrl}/${path}`;
+
+        if (auth) {
+            this.setServerHeaders({
+                authorization: `Bearer ${this._jwt}`
+            });
+
+            await this.request(url, HttpMethods.DELETE);
+        }
+        await this.request(url, HttpMethods.DELETE);
     }
 }
 

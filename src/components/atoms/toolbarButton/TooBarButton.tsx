@@ -1,4 +1,4 @@
-import { faCirclePlus, faHouse, faUser, faNoteSticky, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faHouse, faUser, faNoteSticky, faUsers, faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -12,8 +12,8 @@ export default function TooBarButton(props: ITooBarButtonProps) {
 
     return (
         <div>
-            <button className="p-4 mx-1" onClick={() => router.push('/user/community')}>
-                <FontAwesomeIcon size="2xl" icon={faNoteSticky} style={{ color: "#13070C" }}></FontAwesomeIcon>
+            <button className="p-4 mx-1">
+                <FontAwesomeIcon size="2xl" icon={faBell} style={{ color: "#13070C" }}></FontAwesomeIcon>
             </button>
             <button className="p-4 mx-1" onClick={() => router.push('/')}>
                 <FontAwesomeIcon size="2xl" icon={faHouse} style={{ color: "#13070C" }}></FontAwesomeIcon>

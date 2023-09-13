@@ -50,9 +50,6 @@ export default function PostFoot({ post }: IPostFootProps) {
                         <FontAwesomeIcon size="xl" icon={hasLike ? faHeartSolid : faHeartRegular}></FontAwesomeIcon>
                         {error && <InputShowError>{error?.message}</InputShowError>}
                     </Button>
-                    <Button onClick={() => { }} className="w-24 shadow-none p-0 m-0">
-                        <FontAwesomeIcon size="xl" icon={faNoteSticky}></FontAwesomeIcon>
-                    </Button>
                 </div>
             </div>
             {showHandleComment && <CommentList postId={post.id as string}></CommentList>}
