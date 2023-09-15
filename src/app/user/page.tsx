@@ -58,7 +58,7 @@ export default function UserProfile() {
             <Navbar></Navbar>
             {!user ? <Loading></Loading> : <div className="flex justify-center mt-10">
                 <div className="w-3/4 max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-start justify-start max-md:items-center max-md:justify-center p-10">
-                    {showUserForm ? <UserForm user={user} setShowForm={setShowUserForm}></UserForm> : <Profile user={user}></Profile>}
+                    {showUserForm ? <UserForm user={user} setShowForm={setShowUserForm}></UserForm> : <Profile user={user} currentUserId={userLogged?.user.id as string} ></Profile>}
                     {userIsLogged && <Button className="w-36 m-2" onClick={handleShowUserForm}>{
                         !showUserForm ? <p>Editar</p> : <p>Cancelar</p>
                     }</Button>}

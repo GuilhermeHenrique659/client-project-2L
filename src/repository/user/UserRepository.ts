@@ -101,6 +101,24 @@ export class UserRepository implements IRepository {
             ServerError(error, setError);
         }
     }
+
+    @isAuthetificated()
+    public async followUser(userId: string, setError: Dispatch<AppError>) {
+        try {
+            await this.server.patch(`user/follow/user/${userId}`, undefined, true);
+        } catch (error) {
+            ServerError(error, setError);
+        }
+    }
+
+    @isAuthetificated()
+    public async unfollowUser(userId: string, setError: Dispatch<AppError>) {
+        try {
+            await this.server.patch(`user/unfollow/user/${userId}`, undefined, true);
+        } catch (error) {
+            ServerError(error, setError);
+        }
+    }
 }
 
 

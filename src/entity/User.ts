@@ -1,6 +1,6 @@
 import FileResponse from "./FileResponse";
 import Tag from "./Tag";
-type  User = {
+type User = {
   id?: string;
 
   email: string;
@@ -12,6 +12,8 @@ type  User = {
   avatar?: FileResponse;
 
   isOnline?: boolean;
+
+  hasFollowing?: boolean;
 
   tags?: Tag[];
 }
