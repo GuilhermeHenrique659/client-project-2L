@@ -22,7 +22,7 @@ export default function TooBarButton(props: ITooBarButtonProps) {
                 <FontAwesomeIcon size="2xl" icon={faCirclePlus} style={{ color: "#00A6ED" }} ></FontAwesomeIcon>
             </button>
             <button className="p-4 mx-1">
-                <FontAwesomeIcon size="2xl" icon={faUser} style={{ color: "#13070C" }}></FontAwesomeIcon>
+                <FontAwesomeIcon size="2xl" icon={faUser} onClick={() => router.push('/user/following')} style={{ color: "#13070C" }}></FontAwesomeIcon>
             </button>
             <button className="p-4 mx-1" onClick={() => router.push('/user/community')}>
                 <FontAwesomeIcon size="2xl" icon={faUsers} style={{ color: "#13070C" }}></FontAwesomeIcon>

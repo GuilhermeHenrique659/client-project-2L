@@ -14,12 +14,15 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import AppError from "@src/common/errors/AppError";
 import useUserType from "@src/hooks/user/useUserType";
 import AvatarApp from "../../avatar/AvatarApp";
+import { useRouter } from "next/navigation";
 
 interface ICommentProps {
     postId: string;
 }
 
 export default function CommentList({ postId }: ICommentProps) {
+    const router = useRouter();
+
     const [comments, setComments] = useState<Comment[]>([]);
     const [userType, setUserType] = useState<CreateUserResponse['user']>();
     const [content, setContent] = useState<string>();
@@ -80,7 +83,7 @@ export default function CommentList({ postId }: ICommentProps) {
                 <div className="divide-y">
                     {comments.map((comment, index) => {
                         return <div key={index} className="flex flex-col p-2">
-                            <div className="flex items-center p-2">
+                            <div className="flex items-center p-2 cursor-pointer" onClick={() => router.push(`/user?userId=${comment.user?.id}`)}>
                                 <AvatarApp avatar={comment.user?.avatar?.filename ?? comment.user?.name} size="48"></AvatarApp>
                                 <h4 className="p-3 text-lg">{comment.user?.name}</h4>
                             </div>

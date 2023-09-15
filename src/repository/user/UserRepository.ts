@@ -119,6 +119,13 @@ export class UserRepository implements IRepository {
             ServerError(error, setError);
         }
     }
+
+    @isAuthetificated()
+    public async getFollowersUsers() {
+        const { data } = await this.server.get<User[]>('user/following/users', true);
+
+        return data;
+    }
 }
 
 

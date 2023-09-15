@@ -12,6 +12,7 @@ interface IAvatarProps {
     user?: User;
     file?: File;
     size: string;
+    className?: string;
 }
 
 export default function AvatarApp(props: IAvatarProps) {
@@ -20,29 +21,29 @@ export default function AvatarApp(props: IAvatarProps) {
 
 
     if (avatar) {
-        return <Avatar round size={size} src={serverConfig.endpoint.path.file + avatar} name={avatar}></Avatar>
+        return <Avatar className={props.className} round size={size} src={serverConfig.endpoint.path.file + avatar} name={avatar}></Avatar>
     } else if (user) {
         if (user.avatar) {
-            return <Avatar className="cursor-pointer" onClick={() => router.push(`/user?userId=${user.id}`)} round size={size} src={serverConfig.endpoint.path.file + user.avatar.filename}></Avatar>
+            return <Avatar className={"cursor-pointer " + props.className} onClick={() => router.push(`/user?userId=${user.id}`)} round size={size} src={serverConfig.endpoint.path.file + user.avatar.filename}></Avatar>
         }
 
-        return <Avatar className="cursor-pointer" onClick={() => router.push(`/user?userId=${user.id}`)} round size={size} name={user.name}></Avatar>
+        return <Avatar className={"cursor-pointer " + props.className} onClick={() => router.push(`/user?userId=${user.id}`)} round size={size} name={user.name}></Avatar>
 
     } else if (file) {
-        return <Avatar round size={size} src={`data:image/${file.type};base64, ${file.data}`}></Avatar>
+        return <Avatar className={props.className} round size={size} src={`data:image/${file.type};base64, ${file.data}`}></Avatar>
 
     } else {
 
         const data = LocalStorageHelpers.get<CreateUserResponse>('user');
 
-        if (!data) return <Avatar round size={size}></Avatar>;
+        if (!data) return <Avatar className={props.className} round size={size}></Avatar>;
 
         const { user } = data;
 
         if (user.avatar) {
-            return <Avatar round size={size} src={serverConfig.endpoint.path.file + user.avatar}></Avatar>
+            return <Avatar className={props.className} round size={size} src={serverConfig.endpoint.path.file + user.avatar}></Avatar>
         }
 
-        return <Avatar round size={size} name={user.name}></Avatar>
+        return <Avatar className={props.className} round size={size} name={user.name}></Avatar>
     }
 }
