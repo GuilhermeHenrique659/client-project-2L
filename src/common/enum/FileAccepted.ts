@@ -2,6 +2,6 @@ export const FileAccepted = [
     'png',
     'jpg',
     'png',
-    'mp4',
-    'jpeg'
+    'jpeg',
+    'gif'
 ]
