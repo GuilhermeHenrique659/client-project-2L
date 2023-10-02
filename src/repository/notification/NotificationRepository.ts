@@ -15,6 +15,11 @@ class NotificationRepository implements IRepository {
 
         return data;
     }
+
+    @isAuthetificated()
+    public async delete(id: string) {
+        await this.server.delete(`notification/${id}`)
+    }
 }
 
 const notificationRepository = new NotificationRepository(serverRepository);

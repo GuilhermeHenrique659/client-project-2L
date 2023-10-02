@@ -11,6 +11,7 @@ import Notification from "@src/entity/Notification";
 import notificationRepository from "@src/repository/notification/NotificationRepository";
 import { IServerResponseSuccess } from "@src/repository/common/IServerResponseDTO";
 import notificationSocketRepository from "@src/events/notification/notificationSocketRepository";
+import Loading from "@src/components/atoms/loading/Loading";
 
 
 
@@ -18,15 +19,25 @@ export default function TooBar<T>({ children, setData }: PropsWithChildren<ITool
     const [showForm, setShowForm] = useState<boolean>(true);
     const [showNotfication, setShowNotification] = useState(false)
     const [notifications, setNotifications] = useState<Notification[]>([]);
+    const [loading, setLoading] = useState(true)
     const [notificationCount, setNotificationCount] = useState(0)
 
 
     const handleNewNotification = async ({ data }: IServerResponseSuccess<Notification>) => {
         setNotificationCount(currentCount => currentCount += 1);
-        setNotifications(currrentNotifications => [...currrentNotifications, data])
+        setNotifications(currrentNotifications => [...currrentNotifications, data]);
     }
 
     notificationSocketRepository.socket.addListern('notification/added', handleNewNotification);
+
+    const handleDeleteNotification = async (id: string) => {
+        setLoading(true);
+        await notificationRepository.delete(id);
+        setNotificationCount(currentCount => currentCount -= 1);
+        setNotifications((currentNotifications) => currentNotifications.filter(currentNotification => currentNotification.id !== id));
+        setLoading(false);
+
+    }
 
     const handleShowForm = () => {
         if (showForm)
@@ -44,7 +55,8 @@ export default function TooBar<T>({ children, setData }: PropsWithChildren<ITool
 
     useEffect(() => {
         notificationRepository.list().then((value) => {
-            setNotificationCount(value.length)
+            setNotificationCount(value.length);
+            setLoading(false);
             setNotifications(value);
         })
     }, [])
@@ -57,22 +69,24 @@ export default function TooBar<T>({ children, setData }: PropsWithChildren<ITool
             <div className={`h-fit w-full border mt-4 shadow-lg rounded-md z-10 origin-top-right ${!showForm && 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                 {form}
             </div>
-            {showNotfication && <div className="absolute w-fit my-16 z-20">
-                <div className="flex flex-col items-center p-4 bg-button-color justify-center rounded-md">
+            {showNotfication && <div className="absolute w-fit my-16 bg-button-color rounded-md shadow-xl z-20">
+                {!loading ? <div className="flex flex-col items-center p-4 justify-center ">
                     {notifications.length ? notifications.map((notification, index) => {
                         return <div key={index} className="flex items-center">
                             <span className="text-black">{notification.message}</span>
                             <div>
-                                <button className="p-4"><FontAwesomeIcon size="xl" color="black" icon={faTrash}></FontAwesomeIcon></button>
+                                <button className="p-4" onClick={() => handleDeleteNotification(notification.id)}>
+                                    <FontAwesomeIcon size="xl" color="black" icon={faTrash}></FontAwesomeIcon>
+                                </button>
                             </div>
                         </div>
                     }) : <>
-                        <div className="flex flex-col w-96 align-middle items-center">
+                        <div className="flex flex-col w-96 max-md:w-80 align-middle items-center">
                             <FontAwesomeIcon size="xl" color="black" icon={faBoxOpen}></FontAwesomeIcon>
                             <h1 className="text-black text-xl p-4">Não tem nada de novo</h1>
                         </div>
                     </>}
-                </div>
+                </div> : <Loading color="black"></Loading>}
             </div>}
         </div>
     )
