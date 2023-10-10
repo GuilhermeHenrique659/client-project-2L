@@ -1,6 +1,8 @@
 import serverConfig from "@src/common/config/serverConfig/ServerConfig";
 import File from "@src/entity/File";
 import FileResponse from "@src/entity/FileResponse";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 interface ICoverProps {
     cover?: FileResponse;
@@ -12,8 +14,7 @@ export default function Cover({ cover, file }: ICoverProps) {
 
     if (url) {
         return (
-            <img className="w-full h-72 rounded-md shadow-xl bg-gray-300 flex items-center justify-center" src={url} alt="">
-            </img>
+            <LazyLoadImage src={url} effect="blur" alt={`image-cover`} />
         )
     }
     return (
