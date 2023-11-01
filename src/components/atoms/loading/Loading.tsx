@@ -1,7 +1,11 @@
 import { ThreeDots } from "react-loader-spinner";
 
-export default function Loading() {
+interface ILoadingProps {
+    color?: string
+}
+
+export default function Loading(props: ILoadingProps) {
     return (
-        <ThreeDots color="#D9D9D9"></ThreeDots>
+        <ThreeDots color={props.color ?? "#D9D9D9"}></ThreeDots>
     )
 }

@@ -2,9 +2,12 @@ import { faCirclePlus, faHouse, faUser, faNoteSticky, faUsers, faBell } from "@f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
+import { postSocketRepository } from "@src/events/post/PostSocketRepository";
 
 interface ITooBarButtonProps {
     handleAddButton: () => void;
+    handleNotifcationButton: () => void;
+    notificationCount: number
 }
 
 export default function TooBarButton(props: ITooBarButtonProps) {
@@ -12,8 +15,11 @@ export default function TooBarButton(props: ITooBarButtonProps) {
 
     return (
         <div>
-            <button className="p-4 mx-1">
+            <button className=" mx-1" onClick={props.handleNotifcationButton}>
                 <FontAwesomeIcon size="2xl" icon={faBell} style={{ color: "#13070C" }}></FontAwesomeIcon>
+                <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center -ml-3 -mt-2 text-xs">
+                    {props.notificationCount}
+                </span>
             </button>
             <button className="p-4 mx-1" onClick={() => router.push('/')}>
                 <FontAwesomeIcon size="2xl" icon={faHouse} style={{ color: "#13070C" }}></FontAwesomeIcon>

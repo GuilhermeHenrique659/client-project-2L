@@ -61,7 +61,7 @@ export default function CommentList({ postId }: ICommentProps) {
     }
 
     const handleCommentAdded = async ({ data }: IServerResponseSuccess<Comment>) => {
-        setComments((currentComment) => [...currentComment, data]);
+        setComments((currentComment) => [data, ...currentComment]);
     }
 
 
