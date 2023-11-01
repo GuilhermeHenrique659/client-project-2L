@@ -1,6 +1,6 @@
 import User from "@src/entity/User";
 import IServerRepository from "../common/IServerRepository";
-import { Dispatch } from "react";
+import { Dispatch, use } from "react";
 import { CreateUserResponse } from "./types/CreateUserResponse";
 import ServerError from "../common/ServerError";
 import IRepository from "../common/IRepository";
@@ -69,8 +69,8 @@ export class UserRepository implements IRepository {
     }
 
     @isAuthetificated()
-    public async getFollowingCommunity() {
-        const { data } = await this.server.get<Community[]>('user/community', true);
+    public async getFollowingCommunity(userId: string) {
+        const { data } = await this.server.get<Community[]>(`user/community/${userId}`, true);
 
         return data
     }

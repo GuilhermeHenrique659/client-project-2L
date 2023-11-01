@@ -39,7 +39,8 @@ export default function UserProfile() {
     }
 
     useEffect(() => {
-        userRepository.getFollowingCommunity().then((value) => {
+        if(userId)
+            userRepository.getFollowingCommunity(userId).then((value) => {
             setCommunities(value);
         })
     }, []);

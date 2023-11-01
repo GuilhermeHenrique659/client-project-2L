@@ -1,5 +1,6 @@
 'use client'
 
+import LocalStorageHelpers from "@src/common/helpers/localStorageHelper";
 import Loading from "@src/components/atoms/loading/Loading";
 import FeedBar from "@src/components/molecules/FeedBar/FeedBar";
 import TooBar from "@src/components/molecules/ToolBar/ToolBar";
@@ -9,17 +10,21 @@ import CommunityList from "@src/components/organism/community/CommunityList";
 import Community from "@src/entity/Community";
 import Post from "@src/entity/Post";
 import userRepository from "@src/repository/user/UserRepository";
+import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse";
 import { useEffect, useState } from "react";
 
 export default function Page() {
     const [communities, setCommunities] = useState<Community[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const data = LocalStorageHelpers.get<CreateUserResponse>('user');
 
     useEffect(() => {
-        userRepository.getFollowingCommunity().then((value) => {
-            setCommunities(value);
-            setLoading(false)
-        })
+        if (data?.user.id) {
+            userRepository.getFollowingCommunity(data?.user.id).then((value) => {
+                setCommunities(value);
+                setLoading(false)
+            })
+        }
     }, []);
 
     return (
