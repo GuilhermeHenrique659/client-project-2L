@@ -6,9 +6,13 @@ import UserNavBar from "@src/components/atoms/userNavbar/UserNavBar";
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import TooBar from "../ToolBar/ToolBar";
+import PostForm from "../post/PostForm";
+import Post from "@src/entity/Post";
 
 
 export default function Navbar() {
+    const [posts, setPosts] = useState<Post[]>([]);
     const data = LocalStorageHelpers.get<CreateUserResponse>('user');
     const router = useRouter();
 
@@ -24,9 +28,15 @@ export default function Navbar() {
                 <div className="">
                     <Button className="bg-cnt-dark shadow-none text-neutral-50 flex items-center" onClick={() => router.push('/')} >
                         <div className="rounded-md w-14 h-14 bg-slate-400" id="logo">
+                            <img className=" rounded-md" src="https://potencialize.adm.br/wp-content/uploads/2020/09/problemas.jpg" />
                         </div>
-                        <h3 className="ml-5 text-slate-50">AppName</h3>
+                        <h3 className="ml-5 text-slate-50">Qual é seu problema ?</h3>
                     </Button>
+                </div>
+                <div className="">
+                    <TooBar setData={setPosts}>
+                        <PostForm setData={setPosts} setShowForm={() => { return }}></PostForm>
+                    </TooBar>
                 </div>
                 <div className="max-md:mt-8 max-md:border-t md:pt-2 max-md:w-full">
                     {data && <UserNavBar data={data}></UserNavBar>}

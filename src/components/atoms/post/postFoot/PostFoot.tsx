@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../../button/Button";
-import { faNoteSticky, faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+import { faC, faComment, faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import Post from "@src/entity/Post";
 import { useState } from "react";
@@ -40,17 +40,14 @@ export default function PostFoot({ post }: IPostFootProps) {
 
     return (
         <div>
-            <div className=" w-6/6 rounded-md flex h-12 max-md:flex-col max-md:h-fit overflow-hidden md:divide-x divide-cnt-dark items-center md:justify-between bg-button-color">
-                <div className="flex items-center md:items-start">
-                    <Button onClick={() => setShowHandleComment(!showHandleComment)} className="shadow-none px-4">Discussão</Button>
-                </div>
-                <div className="flex items-center md:items-end">
-                    <Button onClick={() => handleAddLike(post.id as string)} disabled={hasLike} className="w-24 shadow-none flex px-4 m-0">
-                        <h6 className="p-4">{likeCount}</h6>
-                        <FontAwesomeIcon size="xl" icon={hasLike ? faHeartSolid : faHeartRegular}></FontAwesomeIcon>
-                        {error && <InputShowError>{error?.message}</InputShowError>}
-                    </Button>
-                </div>
+            <div className="flex p-4 justify-end w-20">
+                <button className="mx-4" onClick={() => setShowHandleComment(!showHandleComment)} >
+                    <FontAwesomeIcon size="xl" icon={faComment} style={{ color: "gray" }} ></FontAwesomeIcon>
+                </button>
+                <button onClick={() => handleAddLike(post.id as string)} disabled={hasLike}>
+                    <FontAwesomeIcon size="xl" icon={hasLike ? faHeartSolid : faHeartRegular} style={{ color: 'gray' }} ></FontAwesomeIcon>
+                    {error && <InputShowError>{error?.message}</InputShowError>}
+                </button>
             </div>
             {showHandleComment && <CommentList postId={post.id as string}></CommentList>}
         </div>

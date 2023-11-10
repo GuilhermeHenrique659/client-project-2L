@@ -24,10 +24,6 @@ export default function UserNavBar({ data }: IUserNavbarProps) {
     return (
         <div>
             <div className="flex items-center max-md:mt-4 max-md:w-full max-md:justify-between">
-                <div className="max-md:flex max-md:flex-row-reverse md:flex items-center flex-row">
-                    <h4 className="p-4 cursor-pointer" onClick={() => router.push(`/user?userId=${data.user.id}`)}>{data.user.name}</h4>
-                    <AvatarApp avatar={data.user.avatar} size="64"></AvatarApp>
-                </div>
                 <div className="mx-10 max-md:mx-2 max-md:items-end">
                     <a className="p-4 cursor-pointer" onClick={() => router.push(`/user?userId=${data.user.id}`)} ><FontAwesomeIcon size="xl" icon={faGear}></FontAwesomeIcon></a>
                     <a className="p-4" href="" onClick={handleLogout}><FontAwesomeIcon size="xl" icon={faSignOut}></FontAwesomeIcon></a>

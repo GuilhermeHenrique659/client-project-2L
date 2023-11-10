@@ -38,7 +38,7 @@ export default function Posts({ posts, setPosts }: IPostProps) {
     }, [])
 
     return (
-        <div className="flex flex-col w-11/12 items-center justify-around z-0">
+        <div className="flex flex-col w-full items-center justify-around z-0">
             {posts && posts.map((post) => <PostComponent setPosts={setPosts} key={post.id} post={post}></PostComponent>)}
             {loading && <Loading></Loading>}
             <Button onClick={handleLoadingMore} disabled={emptyPosts} className="w-64 h-8 items-center">Carregar mais</Button>

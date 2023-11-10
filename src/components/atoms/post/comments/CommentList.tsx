@@ -85,16 +85,16 @@ export default function CommentList({ postId }: ICommentProps) {
                         return <div key={index} className="flex flex-col p-2">
                             <div className="flex items-center p-2 cursor-pointer" onClick={() => router.push(`/user?userId=${comment.user?.id}`)}>
                                 <AvatarApp avatar={comment.user?.avatar?.filename ?? comment.user?.name} size="48"></AvatarApp>
-                                <h4 className="p-3 text-lg">{comment.user?.name}</h4>
+                                <h4 className="p-3 text-black text-lg">{comment.user?.name}</h4>
                             </div>
-                            <p className="p-2">{comment.content}</p>
+                            <p className="p-2 text-black">{comment.content}</p>
                         </div>
                     })}
                     <div>
                         <div>
                             {userType && <div className="flex items-center">
                                 <AvatarApp avatar={userType.avatar ?? userType.name} size="32"></AvatarApp>
-                                <p className="p-2 mx-2">{userType.name} </p>
+                                <p className="p-2 mx-2 text-black">{userType.name} </p>
                                 <CommentSpinner height={32} width={32} color="#000" backgroundColor="#D9D9D9"></CommentSpinner>
                             </div>}
                         </div>

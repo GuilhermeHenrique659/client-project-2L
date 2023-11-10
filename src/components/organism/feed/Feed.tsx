@@ -11,11 +11,10 @@ export default function Feed() {
     const [posts, setPosts] = useState<Post[]>([]);
 
     return (
-        <div className="w-3/4 h-fit max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-center justify-center p-6">
-            <FeedBar></FeedBar>
-            <TooBar setData={setPosts}>
+        <div className="w-3/4 h-fit max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-white flex flex-col items-center justify-center ">
+            {/* <TooBar setData={setPosts}>
                 <PostForm setData={setPosts} setShowForm={() => { return }}></PostForm>
-            </TooBar>
+            </TooBar> */}
             <Posts posts={posts} setPosts={setPosts}></Posts>
         </div>
     )

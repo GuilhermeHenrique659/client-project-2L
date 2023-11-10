@@ -9,7 +9,8 @@ import { IFormProps } from "@src/common/interface/IFormProps";
 import TagSearch from "../tag/TagSearch";
 import Tag from "@src/entity/Tag";
 import InputFile from "@src/components/atoms/input/InputFile";
-
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
     const [tags, setTags]= useState<Tag[]>([]);
@@ -28,7 +29,7 @@ export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center rounded-md">
+        <div className="flex flex-col items-center justify-center rounded-md bg-slate-100">
             <span className="p-2 m-2">Coloque o texto para compartilhar</span>
             <textarea className="bg-input-bg rounded-t-md w-4/5 p-3 shadow-lg resize-none" onChange={handleContent} rows={8}></textarea>
             <div className="bg-input-bg rounded-b-md mb-2 w-4/5 p-3 shadow-lg resize-none">
@@ -37,15 +38,17 @@ export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
                 </>
                 }
             </div>
-            <div className="flex flex-col-reverse items-center justify-center">
-                <InputFile multiple={true} handleOnChange={handleUploadFiles}></InputFile>
+            <div className="flex flex-col items-center justify-center">
                 <TagSearch setTags={setTags} tags={tags}></TagSearch>
+                <div className="flex flex-row-reverse">
+                <button className="p-4">
+                    <FontAwesomeIcon size="xl" color="black" icon={faSave}></FontAwesomeIcon>
+                </button>
+                    <InputFile multiple={true} handleOnChange={handleUploadFiles}></InputFile>
+                </div>
             </div>
             {error && <InputShowError>{error.message}</InputShowError>}
-            {loading ? <Loading></Loading> : <div className="flex">
-                <Button className="w-36 m-2" onClick={handleSavePost}>Salvar</Button>
-                <Button className="w-36 m-2" onClick={setShowForm}>Cancelar</Button>
-            </div>}
+            {loading && <Loading></Loading>}
         </div>
     )
 }

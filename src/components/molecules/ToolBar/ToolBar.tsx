@@ -16,7 +16,7 @@ import Loading from "@src/components/atoms/loading/Loading";
 
 
 export default function TooBar<T>({ children, setData }: PropsWithChildren<IToolBarProps<T>>) {
-    const [showForm, setShowForm] = useState<boolean>(true);
+    const [showForm, setShowForm] = useState<boolean>(false);
     const [showNotfication, setShowNotification] = useState(false)
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true)
@@ -62,11 +62,11 @@ export default function TooBar<T>({ children, setData }: PropsWithChildren<ITool
     }, [])
 
     return (
-        <div className="relative my-6 mb-20 w-6/12 flex flex-col items-center max-md:w-full">
-            <div className="h-10 w-96 rounded-md shadow-lg bg-button-color flex justify-center items-center">
+        <div className="relative w-fit flex flex-col items-center max-md:w-full">
+            <div className="h-10 w-64 rounded-md shadow-lg bg-button-color flex justify-center items-center">
                 <TooBarButton notificationCount={notificationCount} handleNotifcationButton={() => setShowNotification(!showNotfication)} handleAddButton={handleShowForm}></TooBarButton>
             </div>
-            <div className={`h-fit w-full border mt-4 shadow-lg rounded-md z-10 origin-top-right ${!showForm && 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+            <div className={`absolute h-fit w-[44rem] my-16 bg-button-color rounded-md shadow-xl z-20 ${!showForm && 'hidden'}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                 {form}
             </div>
             {showNotfication && <div className="absolute w-fit my-16 bg-button-color rounded-md shadow-xl z-20">

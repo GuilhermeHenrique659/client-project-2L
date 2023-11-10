@@ -36,6 +36,10 @@ export default function Login() {
 
     return (
         <div className="flex h-screen justify-around items-center">
+            <div className="flex">
+            <div className="lg:w-1/3 lg:h-2/4 sm:w-full sm:h-full">
+                <img src="https://potencialize.adm.br/wp-content/uploads/2020/09/problemas.jpg" alt="" />
+            </div>
             <div className="flex p-10 flex-col items-center shadow-lg rounded-lg justify-evenly content-center bg-cnt-dark lg:w-1/3 lg:h-2/4 sm:w-full sm:h-full">
                 <h1 className="text-lg">Login</h1>
                 <Form className="items-center" inputs={inputs} appError={error}></Form>
@@ -43,6 +47,7 @@ export default function Login() {
                     <Button className="w-32 m-2" onClick={handleOnClickLogin}>Login</Button>
                     <Button className="w-32 m-2" onClick={() => router.push('/register')}>Cadastrar</Button>
                 </div>}
+            </div>
             </div>
         </div>
     )
