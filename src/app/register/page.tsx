@@ -40,8 +40,8 @@ export default function Register() {
                 <h1 className="text-lg">Cadastro</h1>
                 <Form className="items-center" inputs={inputs} appError={error}></Form>
                 {loading ? <Loading></Loading> : <div className="flex flex-col">
-                    <Button className="w-32 m-2" onClick={() => router.push('/login')}>Voltar</Button>
-                    <Button className="w-32 m-2" onClick={handleOnClickSave}>Salvar</Button>
+                    <Button className="w-32 m-2 bg-red-700" onClick={() => router.push('/login')}>Voltar</Button>
+                    <Button className="w-32 m-2 bg-green-700" onClick={handleOnClickSave}>Salvar</Button>
                 </div>}
             </div>
         </div>

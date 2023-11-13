@@ -39,10 +39,10 @@ export default function UserProfile() {
     }
 
     useEffect(() => {
-        if(userId)
+        if (userId)
             userRepository.getFollowingCommunity(userId).then((value) => {
-            setCommunities(value);
-        })
+                setCommunities(value);
+            })
     }, []);
 
     useEffect(() => {
@@ -63,12 +63,6 @@ export default function UserProfile() {
                     {userIsLogged && <Button className="w-36 m-2" onClick={handleShowUserForm}>{
                         !showUserForm ? <p>Editar</p> : <p>Cancelar</p>
                     }</Button>}
-                    <div className="p-10 w-full">
-                        <h3 className="border-b w-full flex justify-center">Communidades seguindo</h3>
-                        <div className="w-full p-4 max-md:w-full max-md:p-1">
-                            {!communities ? <Loading></Loading> : <CommunityList communities={communities}></CommunityList>}
-                        </div>
-                    </div>
                 </div>
             </div>}
         </>

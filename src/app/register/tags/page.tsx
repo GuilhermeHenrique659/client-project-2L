@@ -22,9 +22,9 @@ export default function RegisterTags() {
     const [error, setError] = useState<AppError>();
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleSaveUserTags =async () => {
-        if (tags.length > 0){
-            setLoading(true);            
+    const handleSaveUserTags = async () => {
+        if (tags.length > 0) {
+            setLoading(true);
             await userRepository.createUserTag(tags, setError);
             setLoading(false);
         }
@@ -40,7 +40,7 @@ export default function RegisterTags() {
                 <div className="flex flex-row items-center align-middle z-10 mb-4">
                     <div className="flex flex-col z-10">
                         <div className="flex items-center align-middle">
-                            <Input  id="search" name="" stateSetter={handleSearchInput}></Input>
+                            <Input id="search" name="" stateSetter={handleSearchInput}></Input>
                             <Button className="flex items-center" onClick={() => handleAddTag(searchInput)}><FontAwesomeIcon className="p-2" icon={faAdd}></FontAwesomeIcon></Button>
                         </div>
                         <div className=" bg-input-bg h-20 overflow-y-auto scroll-p-px w-64 rounded-md z-10">
@@ -59,15 +59,15 @@ export default function RegisterTags() {
 
                     <div className="w-96 p-4 bg-input-bg rounded-md shadow-lg min-h-[75px]  overflow-y-auto">
                         {tags.length > 0 ? tags?.map(tag => ` #${tag.description}`) : <>
-                                <h4>Procure itens de seu interesse, se não encontrar adicione</h4>
+                            <h4>Procure itens de seu interesse, se não encontrar adicione</h4>
                         </>}
                     </div>
                 </div>
                 <div>
-                    <Button className="w-32 m-2" onClick={() => router.push('/register/avatar')}>Voltar</Button>
+                    <Button className="w-32 m-2 bg-red-700" onClick={() => router.push('/register/avatar')}>Voltar</Button>
                     {error && <InputShowError>{error.message}</InputShowError>}
                     {loading && <Loading></Loading>}
-                    <Button className="w-32 m-2" onClick={handleSaveUserTags}>Salvar</Button>
+                    <Button className="w-32 m-2 bg-green-700" onClick={handleSaveUserTags}>Salvar</Button>
                 </div>
             </div>
         </div>
