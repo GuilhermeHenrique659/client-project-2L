@@ -13,16 +13,16 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
-    const [tags, setTags]= useState<Tag[]>([]);
+    const [tags, setTags] = useState<Tag[]>([]);
     const { content, filesBase, error, handleContent, handleUploadFiles, setError } = usePostForm();
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleSavePost = async () => {
-        setLoading(true);        
+        setLoading(true);
         const post = await postRepository.save({ content, tags, files: filesBase } as Post, setError);
         setLoading(false);
 
-        if(post){
+        if (post) {
             setShowForm();
             setData((currentPost) => [post, ...currentPost]);
         }
@@ -41,9 +41,9 @@ export default function PostForm({ setShowForm, setData }: IFormProps<Post[]>) {
             <div className="flex flex-col items-center justify-center">
                 <TagSearch setTags={setTags} tags={tags}></TagSearch>
                 <div className="flex flex-row-reverse">
-                <button className="p-4">
-                    <FontAwesomeIcon size="xl" color="black" icon={faSave}></FontAwesomeIcon>
-                </button>
+                    <button className="p-4" onClick={handleSavePost}>
+                        <FontAwesomeIcon size="xl" color="black" icon={faSave}></FontAwesomeIcon>
+                    </button>
                     <InputFile multiple={true} handleOnChange={handleUploadFiles}></InputFile>
                 </div>
             </div>

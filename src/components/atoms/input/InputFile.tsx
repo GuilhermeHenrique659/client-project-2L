@@ -20,9 +20,9 @@ export default function InputFile(props: IInputFileProps) {
 
     return (
         <div className="flex items-center justify-center w-full">
-            <button className="">
+            <label htmlFor="dropzone-file" className=" cursor-pointer">
                 <FontAwesomeIcon size="xl" color="black" icon={faUpload}></FontAwesomeIcon>
-            </button>
+            </label>
             <input id="dropzone-file" type="file" multiple={props.multiple} className="hidden" onChange={e => handleUploadFile(e)} />
         </div>
     )
