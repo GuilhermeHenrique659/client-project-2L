@@ -1,14 +1,10 @@
-import FeedBar from "@src/components/molecules/FeedBar/FeedBar";
-import TooBar from "@src/components/molecules/ToolBar/ToolBar";
 import Posts from "../posts/Posts";
 import Post from "@src/entity/Post";
-import { useState } from "react";
-import PostForm from "@src/components/molecules/post/PostForm";
+import { Dispatch, SetStateAction } from "react";
 
 
 
-export default function Feed() {
-    const [posts, setPosts] = useState<Post[]>([]);
+export default function Feed({ posts, setPosts }: { posts: Post[], setPosts: Dispatch<SetStateAction<Post[]>> }) {
 
     return (
         <div className="w-3/4 h-fit max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-white flex flex-col items-center justify-center ">

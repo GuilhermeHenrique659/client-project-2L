@@ -5,14 +5,13 @@ import Button from "@src/components/atoms/button/Button";
 import UserNavBar from "@src/components/atoms/userNavbar/UserNavBar";
 import { CreateUserResponse } from "@src/repository/user/types/CreateUserResponse"
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import TooBar from "../ToolBar/ToolBar";
 import PostForm from "../post/PostForm";
 import Post from "@src/entity/Post";
 
 
-export default function Navbar() {
-    const [posts, setPosts] = useState<Post[]>([]);
+export default function Navbar({ setPosts }: { setPosts: Dispatch<SetStateAction<Post[]>> }) {
     const data = LocalStorageHelpers.get<CreateUserResponse>('user');
     const router = useRouter();
 

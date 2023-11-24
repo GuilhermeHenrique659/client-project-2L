@@ -46,7 +46,7 @@ export default function PostHeader({ user, post, setPosts }: IPostHeader) {
                 </div>
                 {(currentUser && currentUser.user.id === user.id) &&
                     <div>
-                        <button className="p-4" onClick={handleDeletePost}>{removeConfirm && <>Tem certeza que deseja remover</>}<FontAwesomeIcon size="xl" icon={removeConfirm ? faWarning : faTrash}></FontAwesomeIcon></button>
+                        <button className="p-4 text-black" onClick={handleDeletePost}>{removeConfirm && <>Tem certeza que deseja remover</>}<FontAwesomeIcon size="xl" icon={removeConfirm ? faWarning : faTrash}></FontAwesomeIcon></button>
                     </div>
                 }
             </div>
