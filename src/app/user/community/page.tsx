@@ -29,7 +29,7 @@ export default function Page() {
 
     return (
         <>
-            <Navbar></Navbar>
+            {/* <Navbar></Navbar> */}
             <div className="flex justify-center mt-10 ">
                 <div className="w-3/4 h-fit max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-center justify-center p-6">
                     <FeedBar></FeedBar>

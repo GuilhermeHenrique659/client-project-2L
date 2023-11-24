@@ -13,6 +13,7 @@ import Profile from "@src/components/molecules/user/Profile";
 import UserForm from "@src/components/molecules/user/UserForm";
 import CommunityList from "@src/components/organism/community/CommunityList";
 import Community from "@src/entity/Community";
+import Post from "@src/entity/Post";
 import Tag from "@src/entity/Tag";
 import User from "@src/entity/User";
 import useUserUpdate from "@src/hooks/form/user/UserUpdateForm";
@@ -31,6 +32,7 @@ export default function UserProfile() {
     const [userIsLogged, setUserIsLogged] = useState(false);
     const [communities, setCommunities] = useState<Community[]>([]);
     const [showUserForm, setShowUserForm] = useState<boolean>(false);
+    const [posts, setPosts] = useState<Post[]>([]);
 
     const handleShowUserForm = () => {
         if (userLogged && userLogged.user.id === user?.id) {
@@ -56,7 +58,7 @@ export default function UserProfile() {
 
     return (
         <>
-            <Navbar></Navbar>
+            <Navbar setPosts={setPosts}></Navbar>
             {!user ? <Loading></Loading> : <div className="flex justify-center mt-10">
                 <div className="w-3/4 max-lg:w-full max-lg:h-full rounded-md shadow-xl bg-cnt-dark flex flex-col items-start justify-start max-md:items-center max-md:justify-center p-10">
                     {showUserForm ? <UserForm user={user} setShowForm={setShowUserForm}></UserForm> : <Profile user={user} currentUserId={userLogged?.user.id as string} ></Profile>}
